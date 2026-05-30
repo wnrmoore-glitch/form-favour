@@ -13,7 +13,13 @@
     {%- endif -%}
 
     {%- assign collection = collections[section.settings.collection] -%}
-    {%- if collection != blank -%}
+    {%- if collection == blank or collection.products.size == 0 -%}
+      {%- assign collection = collections['shop-all'] -%}
+    {%- endif -%}
+    {%- if collection == blank or collection.products.size == 0 -%}
+      {%- assign collection = collections.all -%}
+    {%- endif -%}
+    {%- if collection != blank and collection.products.size > 0 -%}
       <ul class="product-grid product-grid--{{ section.settings.columns_desktop }}-col list-unstyled" role="list">
         {%- for product in collection.products limit: section.settings.products_to_show -%}
           <li class="product-grid__item">

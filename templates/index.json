@@ -4,12 +4,13 @@
       "type": "hero-banner",
       "settings": {
         "heading": "Strength in Everyday.",
-        "subtext": "Considered pieces made to last.",
-        "button_label": "Shop now",
+        "subtext": "Training gear and everyday essentials, chosen for form as much as function.",
+        "button_label": "Shop all",
+        "button_link": "shopify://collections/shop-all",
         "height": 650,
-        "overlay_opacity": 10,
+        "overlay_opacity": 15,
         "content_position": "left",
-        "eyebrow": "New arrivals"
+        "eyebrow": "Train. Move. Recover."
       }
     },
     "trust": {
@@ -22,14 +23,15 @@
         "icon_3": "return",
         "text_3": "Easy 30-day returns",
         "icon_4": "star",
-        "text_4": "Trusted by thousands"
+        "text_4": "UK-based support"
       }
     },
     "featured": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow": "Our collection",
+        "eyebrow": "Bestsellers",
         "title": "Shop the edit",
+        "collection": "shop-all",
         "products_to_show": 8,
         "columns_desktop": "4",
         "show_view_all": true
@@ -40,13 +42,24 @@
       "settings": {
         "style": "cream",
         "eyebrow": "Our philosophy",
-        "heading": "Form follows feeling.",
-        "content": "<p>Form & Favour exists for those who believe the everyday deserves to be considered. Every piece is chosen for its form as much as its function — objects that belong in your life and earn their place.</p>",
-        "button_label": "About us",
-        "button_link": "/pages/about",
+        "heading": "Built for the everyday athlete.",
+        "content": "<p>Form & Favour exists for those who believe the everyday deserves to be considered. From resistance training to recovery, every piece is chosen to earn its place in your routine — and your life.</p>",
+        "button_label": "Browse training",
+        "button_link": "shopify://collections/training-fitness",
         "button_style": "secondary"
+      }
+    },
+    "fitness": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "For your workout",
+        "title": "Training & Fitness",
+        "collection": "training-fitness",
+        "products_to_show": 4,
+        "columns_desktop": "4",
+        "show_view_all": true
       }
     }
   },
-  "order": ["hero", "trust", "featured", "story"]
+  "order": ["hero", "trust", "featured", "story", "fitness"]
 }
