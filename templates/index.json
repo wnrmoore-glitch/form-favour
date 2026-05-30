@@ -8,7 +8,7 @@
         "button_label": "Shop all",
         "button_link": "shopify://collections/shop-all",
         "height": 650,
-        "overlay_opacity": 15,
+        "overlay_opacity": 30,
         "content_position": "left",
         "eyebrow": "Train. Move. Recover."
       }
@@ -25,6 +25,19 @@
         "icon_4": "star",
         "text_4": "UK-based support"
       }
+    },
+    "categories": {
+      "type": "collection-list",
+      "settings": {
+        "eyebrow": "Browse",
+        "title": "Shop by category"
+      },
+      "blocks": {
+        "b1": { "type": "collection", "settings": { "collection": "shop-all", "heading": "Shop All" } },
+        "b2": { "type": "collection", "settings": { "collection": "training-fitness", "heading": "Training & Fitness" } },
+        "b3": { "type": "collection", "settings": { "collection": "bags-accessories", "heading": "Bags & Accessories" } }
+      },
+      "block_order": ["b1", "b2", "b3"]
     },
     "featured": {
       "type": "featured-collection",
@@ -61,5 +74,5 @@
       }
     }
   },
-  "order": ["hero", "trust", "featured", "story", "fitness"]
+  "order": ["hero", "trust", "categories", "featured", "story", "fitness"]
 }
