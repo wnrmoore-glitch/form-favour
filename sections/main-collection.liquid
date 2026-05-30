@@ -1,0 +1,110 @@
+<div class="collection-page section">
+  <div class="page-width">
+    <!-- Collection header -->
+    <div class="collection-header">
+      <h1 class="collection__title">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="collection__description rte">{{ collection.description }}</div>
+      {%- endif -%}
+    </div>
+
+    <!-- Results count + sort -->
+    <div class="collection-toolbar">
+      <p class="collection-toolbar__count">
+        {{ collection.products_count }} product{% if collection.products_count != 1 %}s{% endif %}
+      </p>
+      <div class="collection-toolbar__sort">
+        <label for="sort-by" class="sr-only">Sort by</label>
+        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+        <select name="sort_by" id="sort-by" class="select__select" onchange="location.search='?sort_by='+this.value">
+          {%- for option in collection.sort_options -%}
+            <option value="{{ option.value }}"{% if option.value == sort_by %} selected{% endif %}>
+              {{ option.name }}
+            </option>
+          {%- endfor -%}
+        </select>
+      </div>
+    </div>
+
+    <!-- Product grid -->
+    {%- if collection.products.size > 0 -%}
+      <ul class="product-grid product-grid--{{ section.settings.columns_desktop }}-col list-unstyled" role="list">
+        {%- for product in collection.products -%}
+          <li class="product-grid__item">
+            {%- render 'product-card', product: product -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <!-- Pagination -->
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" aria-label="Pagination">
+          <ul class="pagination__list list-unstyled" role="list">
+            {%- if paginate.previous -%}
+              <li><a href="{{ paginate.previous.url }}" class="pagination__item">‹ Prev</a></li>
+            {%- endif -%}
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <li><a href="{{ part.url }}" class="pagination__item">{{ part.title }}</a></li>
+              {%- else -%}
+                <li><span class="pagination__item pagination__item--current" aria-current="page">{{ part.title }}</span></li>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if paginate.next -%}
+              <li><a href="{{ paginate.next.url }}" class="pagination__item">Next ›</a></li>
+            {%- endif -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+    {%- else -%}
+      <p class="collection-empty">No products found in this collection.</p>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  .collection-header { text-align: center; margin-bottom: 2.5rem; }
+  .collection__title { margin: 0 0 0.75rem; }
+  .collection__description { color: var(--ff-stone); max-width: 600px; margin: 0 auto; }
+  .collection-toolbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 0; border-top: var(--ff-border); border-bottom: var(--ff-border);
+    margin-bottom: 2rem;
+  }
+  .collection-toolbar__count { font-size: 0.78rem; color: var(--ff-stone); letter-spacing: 0.06em; margin: 0; }
+  .collection-toolbar__sort select { font-size: 0.8rem; }
+  .pagination { margin-top: 3rem; }
+  .pagination__list { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin: 0; padding: 0; }
+  .pagination__item {
+    display: flex; align-items: center; justify-content: center;
+    min-width: 40px; height: 40px; padding: 0 0.75rem;
+    border: var(--ff-border); border-radius: var(--ff-radius);
+    text-decoration: none; font-size: 0.85rem; color: var(--ff-charcoal);
+    transition: background-color var(--ff-transition), color var(--ff-transition);
+  }
+  .pagination__item:hover,
+  .pagination__item--current {
+    background: var(--ff-charcoal); border-color: var(--ff-charcoal); color: var(--ff-cream);
+  }
+  .collection-empty { text-align: center; color: var(--ff-stone); padding: 3rem 0; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+</style>
+
+{% schema %}
+{
+  "name": "Collection products",
+  "settings": [
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "4"
+    }
+  ]
+}
+{% endschema %}

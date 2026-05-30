@@ -1,0 +1,84 @@
+{% comment %}
+  Renders a product card.
+  Usage: {% render 'product-card', product: product %}
+{% endcomment %}
+
+{%- assign first_image = product.featured_image -%}
+
+<div class="card" itemscope itemtype="http://schema.org/Product">
+  <a href="{{ product.url }}" class="card__link" aria-label="{{ product.title | escape }}">
+    <div class="card__media">
+      {%- if first_image -%}
+        <img
+          src="{{ first_image | image_url: width: 600 }}"
+          srcset="{{ first_image | image_url: width: 400 }} 400w,
+                  {{ first_image | image_url: width: 600 }} 600w,
+                  {{ first_image | image_url: width: 800 }} 800w"
+          sizes="(max-width: 749px) 50vw, 25vw"
+          alt="{{ first_image.alt | escape | default: product.title | escape }}"
+          width="{{ first_image.width }}"
+          height="{{ first_image.height }}"
+          loading="lazy"
+          itemprop="image"
+        >
+      {%- else -%}
+        <div class="card__media-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+      {%- endif -%}
+
+      <!-- Sale badge -->
+      {%- if product.compare_at_price > product.price -%}
+        <span class="badge badge--sale">Sale</span>
+      {%- endif -%}
+      {%- unless product.available -%}
+        <span class="badge badge--sold-out">Sold out</span>
+      {%- endunless -%}
+    </div>
+
+    <div class="card-information">
+      {%- if product.vendor != blank -%}
+        <p class="card__vendor">{{ product.vendor | escape }}</p>
+      {%- endif -%}
+      <h3 class="card__heading" itemprop="name">{{ product.title | escape }}</h3>
+      <div class="card__price">
+        {%- if product.compare_at_price > product.price -%}
+          <span class="price price--on-sale">
+            <span class="price-item price-item--sale">{{ product.price | money }}</span>
+            <span class="price-item price-item--regular">{{ product.compare_at_price | money }}</span>
+          </span>
+        {%- else -%}
+          <span class="price">{{ product.price | money }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+  </a>
+</div>
+
+<style>
+  .card { background: var(--ff-white); border-radius: var(--ff-radius-lg); overflow: hidden; transition: box-shadow var(--ff-transition); }
+  .card:hover { box-shadow: 0 8px 30px rgba(38,41,42,0.1); }
+  .card__link { display: block; text-decoration: none; color: inherit; }
+  .card__media { position: relative; overflow: hidden; aspect-ratio: 3/4; background: var(--ff-cream-dk); }
+  .card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.45s ease; }
+  .card:hover .card__media img { transform: scale(1.04); }
+  .card__media-placeholder {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+    background: var(--ff-cream-dk); color: var(--ff-stone);
+  }
+  .card-information { padding: 1rem 1rem 1.25rem; }
+  .card__vendor { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ff-sage); margin: 0 0 0.25rem; }
+  .card__heading { font-size: 1rem; margin: 0 0 0.4rem; line-height: 1.3; }
+  .card__price { margin-top: 0.25rem; }
+  .price { font-weight: 600; font-size: 0.9rem; }
+  .price--on-sale .price-item--sale { color: var(--ff-sage-dk); }
+  .price--on-sale .price-item--regular { text-decoration: line-through; color: var(--ff-stone-lt); margin-left: 0.35rem; font-size: 0.8rem; font-weight: 400; }
+  .badge {
+    position: absolute; top: 0.75rem; left: 0.75rem;
+    padding: 0.3rem 0.6rem; font-size: 0.62rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    border-radius: var(--ff-radius);
+  }
+  .badge--sale { background: var(--ff-sage); color: #fff; }
+  .badge--sold-out { background: var(--ff-stone); color: #fff; top: auto; bottom: 0.75rem; }
+</style>

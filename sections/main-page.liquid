@@ -1,0 +1,17 @@
+<div class="page-content section">
+  <div class="page-width page-content__inner">
+    <h1 class="page-content__title">{{ page.title }}</h1>
+    <div class="page-content__body rte">{{ page.content }}</div>
+  </div>
+</div>
+<style>
+  .page-content__inner { max-width: 760px; margin: 0 auto; }
+  .page-content__title { margin-bottom: 1.5rem; }
+  .page-content__body { line-height: 1.8; color: var(--ff-charcoal-80); }
+  .rte h2, .rte h3 { margin-top: 2rem; }
+  .rte a { color: var(--ff-sage-dk); text-decoration: underline; }
+  .rte img { border-radius: var(--ff-radius-lg); margin: 2rem 0; }
+</style>
+{% schema %}
+{ "name": "Page content", "settings": [] }
+{% endschema %}

@@ -1,0 +1,5 @@
+# Files not to push to Shopify
+.DS_Store
+*.log
+.git/
+README.md

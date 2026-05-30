@@ -1,0 +1,52 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "heading": "Strength in Everyday.",
+        "subtext": "Considered pieces made to last.",
+        "button_label": "Shop now",
+        "height": 650,
+        "overlay_opacity": 10,
+        "content_position": "left",
+        "eyebrow": "New arrivals"
+      }
+    },
+    "trust": {
+      "type": "trust-bar",
+      "settings": {
+        "icon_1": "shipping",
+        "text_1": "Free UK shipping over £50",
+        "icon_2": "lock",
+        "text_2": "Secure checkout",
+        "icon_3": "return",
+        "text_3": "Easy 30-day returns",
+        "icon_4": "star",
+        "text_4": "Trusted by thousands"
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Our collection",
+        "title": "Shop the edit",
+        "products_to_show": 8,
+        "columns_desktop": "4",
+        "show_view_all": true
+      }
+    },
+    "story": {
+      "type": "rich-text",
+      "settings": {
+        "style": "cream",
+        "eyebrow": "Our philosophy",
+        "heading": "Form follows feeling.",
+        "content": "<p>Form & Favour exists for those who believe the everyday deserves to be considered. Every piece is chosen for its form as much as its function — objects that belong in your life and earn their place.</p>",
+        "button_label": "About us",
+        "button_link": "/pages/about",
+        "button_style": "secondary"
+      }
+    }
+  },
+  "order": ["hero", "trust", "featured", "story"]
+}

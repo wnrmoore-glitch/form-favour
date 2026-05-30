@@ -1,0 +1,172 @@
+<section class="hero" aria-label="Hero banner">
+  <div class="hero__media">
+    {%- if section.settings.image -%}
+      <img
+        src="{{ section.settings.image | image_url: width: 2000 }}"
+        srcset="{{ section.settings.image | image_url: width: 750 }} 750w,
+                {{ section.settings.image | image_url: width: 1100 }} 1100w,
+                {{ section.settings.image | image_url: width: 1500 }} 1500w,
+                {{ section.settings.image | image_url: width: 2000 }} 2000w"
+        sizes="100vw"
+        alt="{{ section.settings.image.alt | escape | default: shop.name }}"
+        loading="eager"
+        fetchpriority="high"
+        class="hero__image"
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.height }}"
+      >
+    {%- else -%}
+      <div class="hero__placeholder"></div>
+    {%- endif -%}
+
+    {%- if section.settings.overlay_opacity > 0 -%}
+      <div class="hero__overlay" style="opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}"></div>
+    {%- endif -%}
+  </div>
+
+  <div class="hero__content-wrapper hero__content-wrapper--{{ section.settings.content_position }}">
+    <div class="hero__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="hero__heading">{{ section.settings.heading | escape }}</h1>
+      {%- endif -%}
+      {%- if section.settings.subtext != blank -%}
+        <p class="hero__subtext">{{ section.settings.subtext | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: '#' }}" class="button hero__button">
+          {{ section.settings.button_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    height: {{ section.settings.height }}px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+  .hero__media, .hero__image {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .hero__placeholder {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--ff-charcoal) 0%, var(--ff-stone) 100%);
+  }
+  .hero__overlay {
+    position: absolute; inset: 0;
+    background: var(--ff-charcoal);
+    pointer-events: none;
+  }
+  .hero__content-wrapper {
+    position: relative; z-index: 1;
+    width: 100%; padding: 0 2rem;
+    display: flex;
+  }
+  .hero__content-wrapper--left { justify-content: flex-start; }
+  .hero__content-wrapper--center { justify-content: center; text-align: center; }
+  .hero__content-wrapper--right { justify-content: flex-end; }
+  .hero__content {
+    background: rgba(245, 241, 233, 0.9);
+    backdrop-filter: blur(4px);
+    padding: 2.5rem 3rem;
+    max-width: 580px;
+  }
+  .hero__content-wrapper--center .hero__content { text-align: center; }
+  .hero__heading {
+    margin: 0.5rem 0;
+    font-size: clamp(2.25rem, 5vw, 4rem) !important;
+  }
+  .hero__subtext { margin: 0.75rem 0 1.5rem; font-size: 1rem; color: var(--ff-charcoal-80); }
+  @media (max-width: 749px) {
+    .hero { height: 75vw; min-height: 420px; }
+    .hero__content { padding: 1.5rem; max-width: 100%; width: 100%; }
+    .hero__content-wrapper { padding: 0 1rem; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "min": 400,
+      "max": 900,
+      "step": 50,
+      "unit": "px",
+      "label": "Banner height",
+      "default": 650
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "%",
+      "label": "Image overlay opacity",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centre" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "New arrivals"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Strength in Everyday."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Considered pieces made to last."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner"
+    }
+  ]
+}
+{% endschema %}

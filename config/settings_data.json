@@ -1,0 +1,11 @@
+{
+  "current": {
+    "color_background": "#F5F1E9",
+    "color_text": "#26292A",
+    "color_accent": "#7B8A6E",
+    "color_button": "#26292A",
+    "color_button_text": "#F5F1E9",
+    "page_width": 1280
+  },
+  "presets": {}
+}

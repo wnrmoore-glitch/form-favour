@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "columns_desktop": "4"
+      }
+    }
+  },
+  "order": ["main"]
+}

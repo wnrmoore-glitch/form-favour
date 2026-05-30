@@ -1,0 +1,39 @@
+{%- if section.settings.show_announcement -%}
+<div class="announcement-bar" role="region" aria-label="Announcement">
+  <div class="announcement-bar__inner page-width">
+    {%- if section.settings.announcement_link != blank -%}
+      <a href="{{ section.settings.announcement_link }}" class="announcement-bar__link">
+        {{ section.settings.announcement_text | escape }}
+      </a>
+    {%- else -%}
+      <p>{{ section.settings.announcement_text | escape }}</p>
+    {%- endif -%}
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show announcement",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "Free UK shipping on orders over £50 · Secure checkout"
+    },
+    {
+      "type": "url",
+      "id": "announcement_link",
+      "label": "Link (optional)"
+    }
+  ]
+}
+{% endschema %}

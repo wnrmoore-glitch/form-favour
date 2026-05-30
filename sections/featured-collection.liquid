@@ -1,0 +1,140 @@
+<section class="featured-collection section">
+  <div class="page-width">
+    {%- if section.settings.title != blank -%}
+      <div class="section__header text-center">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        <h2>{{ section.settings.title | escape }}</h2>
+        {%- if section.settings.description != blank -%}
+          <p class="collection__description">{{ section.settings.description | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- assign collection = collections[section.settings.collection] -%}
+    {%- if collection != blank -%}
+      <ul class="product-grid product-grid--{{ section.settings.columns_desktop }}-col list-unstyled" role="list">
+        {%- for product in collection.products limit: section.settings.products_to_show -%}
+          <li class="product-grid__item">
+            {%- render 'product-card', product: product -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if section.settings.show_view_all and collection.products.size > section.settings.products_to_show -%}
+        <div class="text-center" style="margin-top: 2.5rem;">
+          <a href="{{ collection.url }}" class="button button--secondary">
+            View all {{ collection.title }}
+          </a>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <!-- Placeholder grid for new stores -->
+      <ul class="product-grid product-grid--{{ section.settings.columns_desktop }}-col list-unstyled" role="list">
+        {%- for i in (1..section.settings.products_to_show) -%}
+          <li class="product-grid__item">
+            <div class="card card--placeholder">
+              <div class="card__media placeholder-image"></div>
+              <div class="card-information">
+                <p class="card__heading">Sample Product {{ i }}</p>
+                <p class="price">£29.99</p>
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .product-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin: 0; padding: 0;
+  }
+  .product-grid--4-col { grid-template-columns: repeat(4, 1fr); }
+  .product-grid--3-col { grid-template-columns: repeat(3, 1fr); }
+  .product-grid--2-col { grid-template-columns: repeat(2, 1fr); }
+  .placeholder-image {
+    background: linear-gradient(135deg, var(--ff-cream-dk) 0%, var(--ff-stone-lt) 100%);
+    aspect-ratio: 3/4;
+  }
+  @media (max-width: 989px) {
+    .product-grid--4-col { grid-template-columns: repeat(2, 1fr); }
+    .product-grid--3-col { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 749px) {
+    .product-grid--4-col,
+    .product-grid--3-col,
+    .product-grid--2-col { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  }
+  @media (max-width: 480px) {
+    .product-grid--4-col { grid-template-columns: 1fr; }
+  }
+  .text-center { text-align: center; }
+  .section__header { margin-bottom: 2.5rem; }
+  .section__header h2 { margin: 0.4rem 0; }
+</style>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Our collection"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Shop the edit"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Products to show",
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show \"View all\" button",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,19 @@
+/* Base utilities shared across the theme */
+.page-width {
+  max-width: var(--page-width, 1280px);
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+.list-unstyled { list-style: none; margin: 0; padding: 0; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+@media (min-width: 750px) {
+  .page-width { padding-left: 2rem; padding-right: 2rem; }
+}
+@media (min-width: 1200px) {
+  .page-width { padding-left: 3rem; padding-right: 3rem; }
+}
