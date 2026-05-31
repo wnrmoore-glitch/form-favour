@@ -85,14 +85,14 @@
 
 <body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
 
-  {%- sections 'announcement-bar' -%}
-  {%- sections 'header' -%}
+  {%- section 'announcement-bar' -%}
+  {%- section 'header' -%}
 
   <main id="main-content" tabindex="-1">
     {{ content_for_layout }}
   </main>
 
-  {%- sections 'footer' -%}
+  {%- section 'footer' -%}
 
   {%- render 'cart-drawer' -%}
   {%- render 'cookie-banner' -%}
