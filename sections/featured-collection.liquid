@@ -60,6 +60,7 @@
     gap: 1.5rem;
     margin: 0; padding: 0;
   }
+  .product-grid--5-col { grid-template-columns: repeat(5, 1fr); }
   .product-grid--4-col { grid-template-columns: repeat(4, 1fr); }
   .product-grid--3-col { grid-template-columns: repeat(3, 1fr); }
   .product-grid--2-col { grid-template-columns: repeat(2, 1fr); }
@@ -68,10 +69,12 @@
     aspect-ratio: 3/4;
   }
   @media (max-width: 989px) {
+    .product-grid--5-col { grid-template-columns: repeat(3, 1fr); }
     .product-grid--4-col { grid-template-columns: repeat(2, 1fr); }
     .product-grid--3-col { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 749px) {
+    .product-grid--5-col,
     .product-grid--4-col,
     .product-grid--3-col,
     .product-grid--2-col { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
