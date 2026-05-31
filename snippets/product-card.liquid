@@ -50,6 +50,16 @@
       {%- unless product.available -%}
         <span class="badge badge--sold-out">Sold out</span>
       {%- endunless -%}
+
+      <!-- Quick add sits inside the image so it always centres over the photo -->
+      {%- assign first_available = product.variants | where: 'available', true | first -%}
+      {%- if first_available -%}
+        {%- if product.variants.size == 1 -%}
+          <button type="button" class="quick-add-btn" data-quick-add data-variant-id="{{ first_available.id }}">Quick add</button>
+        {%- else -%}
+          <a href="{{ product.url }}" class="quick-add-btn">Choose options</a>
+        {%- endif -%}
+      {%- endif -%}
     </div>
 
     <div class="card-information">
@@ -72,15 +82,6 @@
       </div>
     </div>
   </a>
-
-  {%- assign first_available = product.variants | where: 'available', true | first -%}
-  {%- if first_available -%}
-    {%- if product.variants.size == 1 -%}
-      <button type="button" class="quick-add-btn" data-quick-add data-variant-id="{{ first_available.id }}">Quick add</button>
-    {%- else -%}
-      <a href="{{ product.url }}" class="quick-add-btn">Choose options</a>
-    {%- endif -%}
-  {%- endif -%}
 </div>
 
 <style>

@@ -886,23 +886,30 @@ footer.footer,
 /* ============================================================
    21  QUICK-ADD ON PRODUCT CARDS
    ============================================================ */
-.card, .product-card, .card-wrapper { position: relative; }
+/* Quick-add is inside .card__media so left/bottom are relative to the image */
 .quick-add-btn {
-  position: absolute; left: 50%; bottom: 4.5rem; transform: translateX(-50%) translateY(8px);
+  position: absolute;
+  left: 50%; bottom: 1.1rem;
+  transform: translateX(-50%) translateY(6px);
   z-index: 3; white-space: nowrap;
   background: var(--ff-charcoal) !important; color: var(--ff-cream) !important;
   border: none !important; border-radius: 99px !important;
   font-size: 0.68rem !important; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 0.6rem 1.25rem !important; cursor: pointer;
+  padding: 0.55rem 1.2rem !important; cursor: pointer;
   opacity: 0; transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
-  box-shadow: 0 4px 14px rgba(38,41,42,0.18);
+  box-shadow: 0 4px 14px rgba(38,41,42,0.22);
 }
-.card:hover .quick-add-btn, .product-card:hover .quick-add-btn, .card-wrapper:hover .quick-add-btn {
+.card:hover .quick-add-btn,
+.product-card:hover .quick-add-btn {
   opacity: 1; transform: translateX(-50%) translateY(0);
 }
 .quick-add-btn:hover { background: var(--ff-sage) !important; }
 @media (max-width: 749px) {
-  .quick-add-btn { opacity: 1; transform: translateX(-50%); bottom: auto; top: 0.6rem; right: 0.6rem; left: auto; padding: 0.45rem 0.85rem !important; }
+  .quick-add-btn {
+    opacity: 1; transform: none;
+    bottom: auto; top: 0.6rem; left: auto; right: 0.6rem;
+    padding: 0.4rem 0.75rem !important;
+  }
 }
 
 
