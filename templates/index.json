@@ -20,7 +20,7 @@
           "type": "slide",
           "settings": {
             "collection": "shop-all",
-            "overlay_opacity": 30,
+            "overlay_opacity": 60,
             "position": "left",
             "eyebrow": "Train. Move. Recover.",
             "heading": "Strength in Everyday.",
@@ -33,7 +33,7 @@
           "type": "slide",
           "settings": {
             "collection": "training-fitness",
-            "overlay_opacity": 35,
+            "overlay_opacity": 60,
             "position": "left",
             "eyebrow": "Build your routine",
             "heading": "Train Anywhere.",
@@ -46,7 +46,7 @@
           "type": "slide",
           "settings": {
             "collection": "bags-accessories",
-            "overlay_opacity": 35,
+            "overlay_opacity": 60,
             "position": "left",
             "eyebrow": "Carry it all",
             "heading": "Built to Go.",
