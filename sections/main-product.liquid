@@ -1,5 +1,8 @@
 {%- assign product = product -%}
 {%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- unless current_variant.available -%}
+  {%- assign current_variant = product.variants | where: 'available', true | first | default: product.selected_or_first_available_variant -%}
+{%- endunless -%}
 
 {%- render 'breadcrumbs' -%}
 <div class="product-page page-width section">
@@ -68,26 +71,47 @@
       {%- form 'product', product, id: 'product-form', novalidate: 'novalidate' -%}
         <input type="hidden" name="id" value="{{ current_variant.id }}" id="variant-id-input">
 
-        <!-- Variants -->
+        <!-- Variants (available stock only) -->
         {%- unless product.has_only_default_variant -%}
           {%- for option in product.options_with_values -%}
+            {%- assign option_position = option.position -%}
             <div class="product-option">
               <label class="product-option__label">
                 {{ option.name }}:
                 <span class="product-option__selected js-selected-{{ option.position }}">{{ option.selected_value }}</span>
               </label>
               <div class="product-option__values">
+                {%- assign first_available_set = false -%}
                 {%- for value in option.values -%}
-                  <label class="product-option__value">
-                    <input
-                      type="radio"
-                      name="{{ option.name }}"
-                      value="{{ value | escape }}"
-                      {% if option.selected_value == value %}checked{% endif %}
-                      class="sr-only"
-                    >
-                    <span class="product-option__swatch">{{ value }}</span>
-                  </label>
+                  {%- comment -%} Check if any in-stock variant has this value {%- endcomment -%}
+                  {%- assign value_has_stock = false -%}
+                  {%- for variant in product.variants -%}
+                    {%- if variant.available -%}
+                      {%- assign opt_val = variant.options[option_position | minus: 1] -%}
+                      {%- if opt_val == value -%}
+                        {%- assign value_has_stock = true -%}
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- if value_has_stock -%}
+                    {%- assign is_selected = false -%}
+                    {%- if option.selected_value == value -%}
+                      {%- assign is_selected = true -%}
+                    {%- elsif first_available_set == false -%}
+                      {%- assign is_selected = true -%}
+                      {%- assign first_available_set = true -%}
+                    {%- endif -%}
+                    <label class="product-option__value">
+                      <input
+                        type="radio"
+                        name="{{ option.name }}"
+                        value="{{ value | escape }}"
+                        {% if is_selected %}checked{% endif %}
+                        class="sr-only"
+                      >
+                      <span class="product-option__swatch">{{ value }}</span>
+                    </label>
+                  {%- endif -%}
                 {%- endfor -%}
               </div>
             </div>

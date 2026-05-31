@@ -57,9 +57,10 @@
     </div>
   </a>
 
-  {%- if product.available -%}
+  {%- assign first_available = product.variants | where: 'available', true | first -%}
+  {%- if first_available -%}
     {%- if product.variants.size == 1 -%}
-      <button type="button" class="quick-add-btn" data-quick-add data-variant-id="{{ product.selected_or_first_available_variant.id }}">Quick add</button>
+      <button type="button" class="quick-add-btn" data-quick-add data-variant-id="{{ first_available.id }}">Quick add</button>
     {%- else -%}
       <a href="{{ product.url }}" class="quick-add-btn">Choose options</a>
     {%- endif -%}
