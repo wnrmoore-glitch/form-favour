@@ -88,7 +88,8 @@
                   {%- assign value_has_stock = false -%}
                   {%- for variant in product.variants -%}
                     {%- if variant.available -%}
-                      {%- assign opt_val = variant.options[option_position | minus: 1] -%}
+                      {%- assign opt_index = option_position | minus: 1 -%}
+                      {%- assign opt_val = variant.options[opt_index] -%}
                       {%- if opt_val == value -%}
                         {%- assign value_has_stock = true -%}
                       {%- endif -%}
