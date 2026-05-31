@@ -13,7 +13,13 @@
             class="footer__logo"
           >
         {%- else -%}
-          <p class="footer__brand-name">{{ shop.name }}</p>
+          <img
+            src="https://cdn.shopify.com/s/files/1/0733/9887/8359/files/form-and-favour-logo-transparent.png?v=1780190020"
+            alt="{{ shop.name }}"
+            width="160"
+            loading="lazy"
+            class="footer__logo"
+          >
         {%- endif -%}
         {%- if section.settings.tagline != blank -%}
           <p class="footer__tagline">{{ section.settings.tagline | escape }}</p>

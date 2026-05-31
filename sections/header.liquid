@@ -18,7 +18,14 @@
           class="header__logo"
         >
       {%- else -%}
-        <span class="header__logo-text h2">{{ shop.name }}</span>
+        <img
+          src="https://cdn.shopify.com/s/files/1/0733/9887/8359/files/form-and-favour-logo-transparent.png?v=1780190020"
+          alt="{{ shop.name }}"
+          width="{{ section.settings.logo_width }}"
+          height="{{ section.settings.logo_width | divided_by: 2.667 | round }}"
+          loading="eager"
+          class="header__logo"
+        >
       {%- endif -%}
     </a>
 
