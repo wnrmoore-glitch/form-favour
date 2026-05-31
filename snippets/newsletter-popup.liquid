@@ -81,7 +81,7 @@
       localStorage.setItem(key, Date.now().toString());
     }
 
-    setTimeout(show, 8000);
+    // setTimeout(show, 8000); // Temporarily disabled to fix overlay issue
     document.getElementById('newsletter-popup-close').addEventListener('click', hide);
     document.getElementById('newsletter-popup-close-btn').addEventListener('click', hide);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hide(); });

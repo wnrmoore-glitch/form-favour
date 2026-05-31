@@ -834,8 +834,8 @@ footer.footer,
 /* ============================================================
    20  PREDICTIVE SEARCH OVERLAY
    ============================================================ */
-.search-overlay { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 350; pointer-events: none; }
-.search-overlay[aria-hidden="false"] { pointer-events: all; }
+.search-overlay { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 350; pointer-events: none; display: none; }
+.search-overlay[aria-hidden="false"] { pointer-events: all; display: block; }
 .search-overlay__backdrop {
   position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(38,41,42,0.5);
   opacity: 0; transition: opacity 0.25s ease;
