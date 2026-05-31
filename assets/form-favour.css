@@ -908,11 +908,21 @@ footer.footer,
   .quick-add-btn {
     opacity: 1; transform: none;
     bottom: auto; top: 0.5rem; left: auto; right: 0.5rem;
-    padding: 0.28rem 0.55rem !important;
-    font-size: 0.58rem !important;
-    letter-spacing: 0.07em;
-    border-radius: 99px !important;
-    box-shadow: 0 2px 8px rgba(38,41,42,0.18);
+    /* Hide text, show + icon instead */
+    font-size: 0 !important;
+    letter-spacing: 0;
+    padding: 0 !important;
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 8px rgba(38,41,42,0.22);
+  }
+  .quick-add-btn::before {
+    content: '+';
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ff-cream);
   }
 }
 
