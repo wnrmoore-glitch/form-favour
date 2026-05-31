@@ -1,6 +1,7 @@
 {%- assign product = product -%}
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 
+{%- render 'breadcrumbs' -%}
 <div class="product-page page-width section">
   <div class="product-page__grid">
 
@@ -133,6 +134,10 @@
 
   </div>
 </div>
+
+{%- render 'sticky-atc', product: product -%}
+{%- render 'related-products', product: product, limit: 4 -%}
+{%- render 'recently-viewed', product: product -%}
 
 {%- comment -%} Full-size image data for the lightbox {%- endcomment -%}
 <script type="application/json" data-product-images>

@@ -1,0 +1,58 @@
+{% unless customer.tags contains 'cookie-accepted' %}
+<div class="cookie-banner" id="cookie-banner" aria-live="polite" role="dialog" aria-label="Cookie consent">
+  <div class="cookie-banner__inner">
+    <p class="cookie-banner__text">
+      We use cookies to give you the best experience and to help us improve our site.
+      <a href="/pages/privacy-policy" class="cookie-banner__link">Privacy policy</a>
+    </p>
+    <div class="cookie-banner__actions">
+      <button type="button" class="cookie-banner__accept button">Accept all</button>
+      <button type="button" class="cookie-banner__decline">Essential only</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cookie-banner {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 450;
+    background: var(--ff-charcoal); color: var(--ff-cream);
+    padding: 1rem 1.5rem;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+  }
+  .cookie-banner.is-visible { transform: translateY(0); }
+  .cookie-banner__inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+  }
+  .cookie-banner__text { flex: 1; font-size: 0.82rem; color: rgba(245,241,233,0.85); margin: 0; }
+  .cookie-banner__link { color: var(--ff-sage-lt); text-decoration: underline; }
+  .cookie-banner__actions { display: flex; gap: 0.75rem; align-items: center; flex-shrink: 0; }
+  .cookie-banner__accept { padding: 0.6rem 1.25rem !important; font-size: 0.72rem !important; white-space: nowrap; }
+  .cookie-banner__decline {
+    background: none; border: none; cursor: pointer;
+    font-size: 0.72rem; color: rgba(245,241,233,0.6);
+    text-decoration: underline; white-space: nowrap;
+  }
+  .cookie-banner__decline:hover { color: var(--ff-cream); }
+  @media (max-width: 749px) {
+    .cookie-banner__inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  }
+</style>
+
+<script>
+  (function () {
+    var banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+    if (localStorage.getItem('ff-cookies')) { banner.remove(); return; }
+    setTimeout(function () { banner.classList.add('is-visible'); }, 800);
+    function dismiss(value) {
+      localStorage.setItem('ff-cookies', value);
+      banner.classList.remove('is-visible');
+      setTimeout(function () { banner.remove(); }, 400);
+    }
+    banner.querySelector('.cookie-banner__accept').addEventListener('click', function () { dismiss('all'); });
+    banner.querySelector('.cookie-banner__decline').addEventListener('click', function () { dismiss('essential'); });
+  })();
+</script>
+{% endunless %}

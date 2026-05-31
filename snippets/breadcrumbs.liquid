@@ -1,0 +1,46 @@
+<nav class="breadcrumbs page-width" aria-label="Breadcrumb">
+  <ol class="breadcrumbs__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+      <meta itemprop="position" content="1">
+      <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+    </li>
+
+    {%- if template.name == 'collection' -%}
+      <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name" aria-current="page">{{ collection.title }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+
+    {%- elsif template.name == 'product' -%}
+      {%- assign parent = product.collections.first -%}
+      {%- if parent -%}
+        <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="{{ parent.url }}" itemprop="item"><span itemprop="name">{{ parent.title }}</span></a>
+          <meta itemprop="position" content="2">
+          <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+        </li>
+      {%- endif -%}
+      <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name" aria-current="page">{{ product.title | truncate: 50 }}</span>
+        <meta itemprop="position" content="{% if parent %}3{% else %}2{% endif %}">
+      </li>
+
+    {%- elsif template.name == 'page' -%}
+      <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name" aria-current="page">{{ page.title }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+    {%- endif -%}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs { padding: 0.75rem 0; }
+  .breadcrumbs__list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem; }
+  .breadcrumbs__item { display: flex; align-items: center; gap: 0.25rem; font-size: 0.72rem; letter-spacing: 0.06em; color: var(--ff-stone); }
+  .breadcrumbs__item a { color: var(--ff-stone); text-decoration: none; }
+  .breadcrumbs__item a:hover { color: var(--ff-sage-dk); }
+  .breadcrumbs__item [aria-current="page"] { color: var(--ff-charcoal); }
+  .breadcrumbs__sep { color: var(--ff-stone-lt); }
+</style>

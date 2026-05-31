@@ -83,6 +83,16 @@
 
     </div>
 
+    <!-- Policy links row -->
+    <div class="footer__policy-row">
+      <a href="/pages/about">About Us</a>
+      <a href="/pages/contact">Contact</a>
+      <a href="/pages/faq">FAQ</a>
+      <a href="/pages/shipping-returns">Shipping &amp; Returns</a>
+      <a href="/pages/privacy-policy">Privacy Policy</a>
+      <a href="/pages/terms-of-service">Terms of Service</a>
+    </div>
+
     <!-- Bottom bar -->
     <div class="footer__bottom">
       <p>© {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
@@ -114,6 +124,17 @@
   .footer__newsletter-form { display: flex; gap: 0.5rem; flex-wrap: wrap; }
   .footer__newsletter-input { flex: 1; min-width: 0; padding: 0.6rem 0.875rem; }
   .footer__newsletter-btn { flex-shrink: 0; padding: 0.6rem 1.25rem !important; font-size: 0.72rem !important; }
+  .footer__policy-row {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem;
+    border-top: 1px solid rgba(245,241,233,0.1);
+    padding-top: 1.5rem; margin-top: 3rem;
+  }
+  .footer__policy-row a {
+    font-size: 0.72rem; color: rgba(245,241,233,0.45);
+    text-decoration: none; letter-spacing: 0.05em;
+    transition: color var(--ff-transition);
+  }
+  .footer__policy-row a:hover { color: var(--ff-sage-lt); }
   .footer__bottom {
     display: flex; justify-content: space-between; align-items: center;
     border-top: 1px solid rgba(245,241,233,0.1);

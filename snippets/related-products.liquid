@@ -1,0 +1,33 @@
+{% comment %}
+  Related products — shows up to 4 products from the same collection,
+  excluding the current product.
+  Usage: {% render 'related-products', product: product, limit: 4 %}
+{% endcomment %}
+
+{%- assign related_limit = limit | default: 4 -%}
+{%- assign related_collection = product.collections.first -%}
+{%- if related_collection == blank -%}{%- assign related_collection = collections['shop-all'] -%}{%- endif -%}
+
+{%- assign related_products = related_collection.products | where: 'id', product.id | map: 'id' -%}
+{%- assign shown = 0 -%}
+
+{%- capture related_html -%}
+  {%- for p in related_collection.products -%}
+    {%- if p.id != product.id and shown < related_limit -%}
+      {%- render 'product-card', product: p -%}
+      {%- assign shown = shown | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if shown > 0 -%}
+  <section class="related-products page-width section">
+    <div class="section__header text-center">
+      <p class="eyebrow">Complete the set</p>
+      <h2>You might also like</h2>
+    </div>
+    <div class="product-grid product-grid--{{ related_limit }}">
+      {{ related_html }}
+    </div>
+  </section>
+{%- endif -%}

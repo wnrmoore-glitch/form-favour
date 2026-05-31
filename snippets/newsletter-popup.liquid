@@ -1,0 +1,92 @@
+{% comment %} Newsletter popup — shown once after 8s, suppressed for 30 days after dismiss {% endcomment %}
+<div class="newsletter-popup" id="newsletter-popup" aria-hidden="true" role="dialog" aria-label="Newsletter signup">
+  <div class="newsletter-popup__overlay" id="newsletter-popup-close"></div>
+  <div class="newsletter-popup__panel">
+    <button class="newsletter-popup__close" id="newsletter-popup-close-btn" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="newsletter-popup__content">
+      <p class="eyebrow">Join the edit</p>
+      <h2 class="newsletter-popup__heading">10% off your first order</h2>
+      <p class="newsletter-popup__sub">Plus new arrivals, training tips and member-only offers.</p>
+      {% form 'customer', id: 'newsletter-popup-form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="newsletter-popup__fields">
+          <input
+            type="email" name="contact[email]"
+            class="newsletter-popup__input"
+            placeholder="Your email address"
+            required autocomplete="email"
+            aria-label="Email address"
+          >
+          <button type="submit" class="button newsletter-popup__btn">Get 10% off</button>
+        </div>
+        <p class="newsletter-popup__legal">No spam, unsubscribe any time. <a href="/pages/privacy-policy">Privacy policy</a>.</p>
+      {% endform %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .newsletter-popup {
+    position: fixed; inset: 0; z-index: 480;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none; opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .newsletter-popup.is-visible { pointer-events: all; opacity: 1; }
+  .newsletter-popup__overlay { position: absolute; inset: 0; background: rgba(38,41,42,0.55); }
+  .newsletter-popup__panel {
+    position: relative; z-index: 1;
+    background: var(--ff-cream); border-radius: var(--ff-radius-lg);
+    padding: 3rem 2.5rem; max-width: 480px; width: 92%;
+    box-shadow: 0 20px 60px rgba(38,41,42,0.2);
+    text-align: center;
+    transform: translateY(16px); transition: transform 0.35s ease;
+  }
+  .newsletter-popup.is-visible .newsletter-popup__panel { transform: translateY(0); }
+  .newsletter-popup__close {
+    position: absolute; top: 1rem; right: 1rem;
+    background: none; border: none; cursor: pointer;
+    color: var(--ff-stone); display: flex;
+  }
+  .newsletter-popup__heading { font-size: 2rem !important; margin: 0.5rem 0 0.75rem; }
+  .newsletter-popup__sub { color: var(--ff-stone); font-size: 0.9rem; margin-bottom: 1.5rem; }
+  .newsletter-popup__fields { display: flex; gap: 0.5rem; }
+  .newsletter-popup__input {
+    flex: 1; border: var(--ff-border-dk) !important; border-radius: var(--ff-radius) !important;
+    padding: 0.75rem 1rem; font-size: 0.9rem;
+  }
+  .newsletter-popup__btn { white-space: nowrap; padding: 0.75rem 1.25rem !important; font-size: 0.72rem !important; }
+  .newsletter-popup__legal { font-size: 0.68rem; color: var(--ff-stone-lt); margin-top: 0.75rem; }
+  .newsletter-popup__legal a { color: var(--ff-stone); }
+  @media (max-width: 480px) {
+    .newsletter-popup__fields { flex-direction: column; }
+    .newsletter-popup__panel { padding: 2rem 1.5rem; }
+  }
+</style>
+
+<script>
+  (function () {
+    var popup = document.getElementById('newsletter-popup');
+    if (!popup) return;
+    var key = 'ff-newsletter-dismissed';
+    var dismissed = localStorage.getItem(key);
+    if (dismissed && Date.now() - parseInt(dismissed) < 30 * 24 * 60 * 60 * 1000) return;
+
+    function show() { popup.classList.add('is-visible'); popup.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
+    function hide() {
+      popup.classList.remove('is-visible'); popup.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      localStorage.setItem(key, Date.now().toString());
+    }
+
+    setTimeout(show, 8000);
+    document.getElementById('newsletter-popup-close').addEventListener('click', hide);
+    document.getElementById('newsletter-popup-close-btn').addEventListener('click', hide);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hide(); });
+
+    var form = document.getElementById('newsletter-popup-form');
+    if (form) form.addEventListener('submit', function () { setTimeout(hide, 500); });
+  })();
+</script>

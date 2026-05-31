@@ -1,0 +1,76 @@
+{% comment %} Sticky add-to-cart bar — mobile only, appears when main button scrolls out of view {% endcomment %}
+{%- assign cv = product.selected_or_first_available_variant -%}
+<div class="sticky-atc" id="sticky-atc" aria-hidden="true">
+  <div class="sticky-atc__inner">
+    <div class="sticky-atc__product">
+      {%- if product.featured_image -%}
+        <img src="{{ product.featured_image | image_url: width: 80 }}" alt="{{ product.title | escape }}" width="40" height="40" loading="lazy">
+      {%- endif -%}
+      <div>
+        <p class="sticky-atc__title">{{ product.title | truncate: 40 }}</p>
+        <p class="sticky-atc__price">
+          {%- if cv.compare_at_price > cv.price -%}
+            <span class="sticky-atc__sale">{{ cv.price | money }}</span>
+            <s class="sticky-atc__was">{{ cv.compare_at_price | money }}</s>
+          {%- else -%}
+            {{ cv.price | money }}
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+    <button
+      type="button" class="button sticky-atc__btn"
+      id="sticky-atc-btn"
+      {%- unless cv.available %} disabled{%- endunless -%}
+    >
+      {%- if cv.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+    </button>
+  </div>
+</div>
+
+<style>
+  .sticky-atc {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
+    background: var(--ff-cream); border-top: var(--ff-border);
+    box-shadow: 0 -4px 20px rgba(38,41,42,0.1);
+    transform: translateY(100%); transition: transform 0.3s ease;
+    display: none;
+  }
+  .sticky-atc[aria-hidden="false"] { transform: translateY(0); }
+  .sticky-atc__inner {
+    max-width: 100%; padding: 0.75rem 1rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .sticky-atc__product { display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 0; }
+  .sticky-atc__product img { width: 40px; height: 40px; object-fit: cover; border-radius: var(--ff-radius); flex-shrink: 0; }
+  .sticky-atc__title { font-size: 0.8rem; font-weight: 500; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sticky-atc__price { font-size: 0.82rem; font-weight: 600; margin: 0; color: var(--ff-charcoal); }
+  .sticky-atc__sale { color: var(--ff-sage-dk); }
+  .sticky-atc__was { font-size: 0.72rem; color: var(--ff-stone-lt); font-weight: 400; margin-left: 0.25rem; }
+  .sticky-atc__btn { flex-shrink: 0; padding: 0.7rem 1.25rem !important; font-size: 0.72rem !important; white-space: nowrap; }
+  @media (min-width: 750px) { .sticky-atc { display: none !important; } }
+  @media (max-width: 749px) { .sticky-atc { display: block; } }
+</style>
+
+<script>
+(function () {
+  var bar = document.getElementById('sticky-atc');
+  var btn = document.getElementById('sticky-atc-btn');
+  var mainBtn = document.querySelector('.product-form__submit');
+  if (!bar || !mainBtn) return;
+
+  var observer = new IntersectionObserver(function (entries) {
+    var visible = entries[0].isIntersecting;
+    bar.setAttribute('aria-hidden', visible ? 'true' : 'false');
+  }, { threshold: 0.1 });
+  observer.observe(mainBtn);
+
+  // Wire sticky button to trigger the main form
+  if (btn) {
+    btn.addEventListener('click', function () {
+      var form = document.getElementById('product-form');
+      if (form) form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    });
+  }
+})();
+</script>
