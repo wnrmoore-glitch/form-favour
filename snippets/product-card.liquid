@@ -68,29 +68,47 @@
 </div>
 
 <style>
-  .card { background: var(--ff-white); border-radius: var(--ff-radius-lg); overflow: hidden; transition: box-shadow var(--ff-transition); }
-  .card:hover { box-shadow: 0 8px 30px rgba(38,41,42,0.1); }
+  .card {
+    background: var(--ff-white);
+    border-radius: var(--ff-radius-lg);
+    overflow: hidden;
+    transition: box-shadow var(--ff-transition), transform var(--ff-transition);
+    border-bottom: 2px solid transparent;
+  }
+  .card:hover {
+    box-shadow: var(--ff-shadow-md, 4px 6px 0 rgba(38,48,40,0.1));
+    transform: translateY(-3px);
+    border-bottom-color: var(--ff-sage);
+  }
   .card__link { display: block; text-decoration: none; color: inherit; }
   .card__media { position: relative; overflow: hidden; aspect-ratio: 3/4; background: var(--ff-cream-dk); }
-  .card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.45s ease; }
-  .card:hover .card__media img { transform: scale(1.04); }
+  .card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  .card:hover .card__media img { transform: scale(1.05); }
   .card__media-placeholder {
     width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
     background: var(--ff-cream-dk); color: var(--ff-stone);
   }
-  .card-information { padding: 0.75rem 0.75rem 1rem; }
-  .card__vendor { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ff-sage); margin: 0 0 0.2rem; }
-  .card__heading { font-size: 0.88rem; margin: 0 0 0.3rem; line-height: 1.3; }
-  .card__price { margin-top: 0.2rem; }
-  .price { font-weight: 600; font-size: 0.82rem; }
+  .card-information { padding: 0.75rem 0.85rem 1rem; }
+  .card__vendor {
+    font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ff-gold, #B8936A); margin: 0 0 0.2rem;
+  }
+  .card__heading {
+    font-family: var(--ff-font-heading);
+    font-size: 0.95rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.03em;
+    margin: 0 0 0.3rem; line-height: 1.25;
+  }
+  .card__price { margin-top: 0.25rem; }
+  .price { font-weight: 600; font-size: 0.85rem; }
   .price--on-sale .price-item--sale { color: var(--ff-sage-dk); }
-  .price--on-sale .price-item--regular { text-decoration: line-through; color: var(--ff-stone-lt); margin-left: 0.35rem; font-size: 0.8rem; font-weight: 400; }
+  .price--on-sale .price-item--regular { text-decoration: line-through; color: var(--ff-stone-lt); margin-left: 0.35rem; font-size: 0.78rem; font-weight: 400; }
   .badge {
     position: absolute; top: 0.75rem; left: 0.75rem;
-    padding: 0.3rem 0.6rem; font-size: 0.62rem; font-weight: 600;
-    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.3rem 0.65rem; font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
     border-radius: var(--ff-radius);
   }
   .badge--sale { background: var(--ff-sage); color: #fff; }
-  .badge--sold-out { background: var(--ff-stone); color: #fff; top: auto; bottom: 0.75rem; }
+  .badge--sold-out { background: var(--ff-charcoal); color: var(--ff-cream); top: auto; bottom: 0.75rem; }
 </style>

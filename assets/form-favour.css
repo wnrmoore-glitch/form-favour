@@ -1,10 +1,8 @@
 /* ============================================================
    FORM & FAVOUR — Custom CSS
-   Brand: Premium-minimal, warm. Charcoal / Cream / Sage.
+   Brand: Premium-minimal, warm. Forest / Cream / Terracotta.
    Tagline: Strength in everyday.
-
-   Paste into: Online Store › Themes › Customize ›
-               Theme settings › Custom CSS
+   Theme: B+C blend — Clay & Forest
 
    Sections:
    01  Design tokens
@@ -33,29 +31,35 @@
    01  DESIGN TOKENS
    ============================================================ */
 :root {
-  /* Palette */
-  --ff-charcoal:   #26292A;
-  --ff-charcoal-80:#3f4344;
-  --ff-cream:      #F5F1E9;
-  --ff-cream-dk:   #EDE9DF;
-  --ff-sage:       #7B8A6E;
-  --ff-sage-dk:    #647058;
-  --ff-sage-lt:    #A8B59A;
-  --ff-stone:      #6B6F70;
-  --ff-stone-lt:   #9DA0A1;
+  /* Palette — Forest / Cream / Terracotta */
+  --ff-charcoal:   #263028;   /* deep forest-slate (was pure charcoal) */
+  --ff-charcoal-80:#3d4a3e;
+  --ff-cream:      #F5F0E8;   /* warm bone cream */
+  --ff-cream-dk:   #EDE5D8;
+  --ff-sage:       #C4714A;   /* terracotta — primary accent */
+  --ff-sage-dk:    #A85A38;   /* deep terracotta */
+  --ff-sage-lt:    #D4956A;   /* warm peach */
+  --ff-gold:       #B8936A;   /* dusty gold — secondary accent */
+  --ff-stone:      #7A7468;   /* warm stone */
+  --ff-stone-lt:   #A8A49C;
   --ff-white:      #FFFFFF;
 
   /* Typography */
-  --ff-font-heading: "Montserrat", "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
-  --ff-font-body:    "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --ff-font-heading: "Barlow Semi Condensed", "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --ff-font-body:    "Jost", "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
 
   /* Sizing */
-  --ff-radius:     3px;
-  --ff-radius-lg:  6px;
-  --ff-border:     1px solid rgba(38, 41, 42, 0.12);
-  --ff-border-dk:  1px solid rgba(38, 41, 42, 0.24);
+  --ff-radius:     2px;
+  --ff-radius-lg:  4px;
+  --ff-border:     1px solid rgba(38, 48, 40, 0.13);
+  --ff-border-dk:  1px solid rgba(38, 48, 40, 0.28);
   --ff-transition: 0.22s ease;
   --ff-section-gap: 2.5rem;
+
+  /* Shadows — sharper, from Option B */
+  --ff-shadow-sm:  2px 3px 0 rgba(38, 48, 40, 0.08);
+  --ff-shadow-md:  4px 6px 0 rgba(38, 48, 40, 0.1);
+  --ff-shadow-soft: 0 8px 28px rgba(38, 48, 40, 0.1);
 }
 
 
@@ -83,16 +87,17 @@ img { display: block; max-width: 100%; height: auto; }
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: var(--ff-font-heading) !important;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: 0.02em;   /* Barlow Semi Condensed reads well with slight tracking */
+  line-height: 1.1;
   color: var(--ff-charcoal);
+  text-transform: uppercase;
 }
 
-h1, .h1 { font-size: clamp(1.85rem, 4vw, 3rem); }
-h2, .h2 { font-size: clamp(1.35rem, 3vw, 2rem); }
-h3, .h3 { font-size: clamp(1.1rem, 2.5vw, 1.4rem); }
-h4, .h4 { font-size: 1.05rem; }
+h1, .h1 { font-size: clamp(2.2rem, 4.5vw, 3.5rem); }
+h2, .h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
+h3, .h3 { font-size: clamp(1.1rem, 2vw, 1.5rem); }
+h4, .h4 { font-size: 1.1rem; }
 
 /* Subheadings / eyebrow labels */
 .eyebrow,
@@ -163,14 +168,14 @@ header[class*="header"] {
 .header__menu-item,
 .list-menu__item a {
   font-family: var(--ff-font-body) !important;
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ff-charcoal) !important;
   text-decoration: none;
   transition: color var(--ff-transition);
-  padding-bottom: 2px;
-  border-bottom: 1px solid transparent;
+  padding-bottom: 3px;
+  border-bottom: 2px solid transparent;
 }
 
 .header__nav-item a:hover,
@@ -227,9 +232,10 @@ header[class*="header"] {
 .hero__heading,
 .slideshow__heading {
   font-family: var(--ff-font-heading) !important;
-  font-size: clamp(2.25rem, 5vw, 4rem) !important;
-  line-height: 1.1 !important;
-  letter-spacing: 0.02em;
+  font-size: clamp(2.75rem, 6vw, 5.5rem) !important;
+  line-height: 1.0 !important;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
   color: var(--ff-charcoal);
 }
 
@@ -343,12 +349,13 @@ a:hover { color: var(--ff-sage-dk); }
   border-radius: var(--ff-radius-lg);
   overflow: hidden;
   background-color: var(--ff-white);
-  transition: box-shadow var(--ff-transition);
+  transition: box-shadow var(--ff-transition), transform var(--ff-transition);
 }
 
 .card:hover,
 .product-card:hover {
-  box-shadow: 0 6px 24px rgba(38, 41, 42, 0.1);
+  box-shadow: var(--ff-shadow-md);
+  transform: translateY(-2px);
 }
 
 /* Image zoom on hover */
@@ -686,25 +693,26 @@ hr, .section-divider {
    ============================================================ */
 .trust-bar,
 .icon-with-text {
-  background-color: var(--ff-cream-dk);
-  padding: 1.5rem 1rem;
-  border-top: var(--ff-border);
-  border-bottom: var(--ff-border);
+  background-color: var(--ff-charcoal);
+  color: var(--ff-cream);
+  padding: 1.25rem 1rem;
+  border-top: none;
+  border-bottom: none;
 }
 
 .trust-bar__item,
 .icon-with-text__item {
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ff-charcoal);
+  color: var(--ff-cream);
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
 .trust-bar__icon svg,
-.icon-with-text__icon svg { color: var(--ff-sage); }
+.icon-with-text__icon svg { color: var(--ff-gold); }
 
 
 /* ============================================================
@@ -746,7 +754,7 @@ footer.footer,
 .site-footer {
   background-color: var(--ff-charcoal) !important;
   color: var(--ff-cream);
-  border-top: 3px solid var(--ff-sage);
+  border-top: 3px solid var(--ff-gold);
 }
 
 .footer__heading,
