@@ -10,7 +10,6 @@
         "s1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/photo-1599058917212-d750089bc07e.jpg",
             "overlay_opacity": 30,
             "position": "left",
             "eyebrow": "Train. Move. Recover.",
@@ -23,7 +22,6 @@
         "s2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/premium_photo-1661581920957-4550cf2fe431.jpg",
             "overlay_opacity": 30,
             "position": "left",
             "eyebrow": "Build your routine",
@@ -36,7 +34,6 @@
         "s3": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/premium_photo-1678739395192-bfdd13322d34.jpg",
             "overlay_opacity": 25,
             "position": "left",
             "eyebrow": "Carry it all",

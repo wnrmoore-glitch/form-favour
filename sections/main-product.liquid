@@ -66,7 +66,7 @@
       </div>
 
       {%- form 'product', product, id: 'product-form', novalidate: 'novalidate' -%}
-        <input type="hidden" name="id" value="{{ current_variant.id }}">
+        <input type="hidden" name="id" value="{{ current_variant.id }}" id="variant-id-input">
 
         <!-- Variants -->
         {%- unless product.has_only_default_variant -%}
@@ -124,7 +124,7 @@
 
       {%- endform -%}
 
-      <!-- Judge.me star rating (below price, above form) -->
+      <!-- Judge.me star rating (above form, below price) -->
       <div class="product__reviews-badge">
         {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', concierge_install: true, product: product %}
       </div>
@@ -305,14 +305,83 @@
     document.querySelector('.js-qty-plus')?.addEventListener('click', function () {
       if (input) input.value = parseInt(input.value) + 1;
     });
-    // Variant label update
-    document.querySelectorAll('.product-option__value input').forEach(function (radio) {
-      radio.addEventListener('change', function () {
-        var pos = this.closest('.product-option').querySelector('.product-option__label')
-          ?.querySelector('[class*="js-selected"]');
-        if (pos) pos.textContent = this.value;
+    // ---- Variant selector: update id, price, availability ----
+    var productVariants = [];
+    try {
+      productVariants = {{ product.variants | json }};
+    } catch(e) {}
+
+    function getSelectedOptions() {
+      var opts = [];
+      document.querySelectorAll('.product-option').forEach(function (group) {
+        var checked = group.querySelector('input[type="radio"]:checked');
+        if (checked) opts.push(checked.value);
       });
+      return opts;
+    }
+
+    function findVariant(selectedOpts) {
+      return productVariants.find(function (v) {
+        return v.options.every(function (opt, i) { return opt === selectedOpts[i]; });
+      });
+    }
+
+    function updateVariant() {
+      var opts = getSelectedOptions();
+      var variant = findVariant(opts);
+      if (!variant) return;
+
+      // Update hidden id
+      var idInput = document.getElementById('variant-id-input');
+      if (idInput) idInput.value = variant.id;
+
+      // Update price display
+      var priceEl = document.querySelector('.product__price');
+      if (priceEl) {
+        var price = (variant.price / 100).toFixed(2);
+        var cmp = variant.compare_at_price;
+        if (cmp && cmp > variant.price) {
+          var cmpFormatted = (cmp / 100).toFixed(2);
+          priceEl.innerHTML = '<span class="price--on-sale">'
+            + '<span class="price-item--sale">£' + price + '</span>'
+            + '<span class="price-item--regular">£' + cmpFormatted + '</span>'
+            + '</span>';
+        } else {
+          priceEl.innerHTML = '<span class="price">£' + price + '</span>';
+        }
+      }
+
+      // Update ATC button availability
+      var submitBtn = document.querySelector('.product-form__submit');
+      var stickyBtn = document.getElementById('sticky-atc-btn');
+      if (submitBtn) {
+        submitBtn.disabled = !variant.available;
+        submitBtn.textContent = variant.available ? 'Add to cart' : 'Sold out';
+      }
+      if (stickyBtn) {
+        stickyBtn.disabled = !variant.available;
+        stickyBtn.textContent = variant.available ? 'Add to cart' : 'Sold out';
+      }
+
+      // Update URL without reload
+      if (window.history && window.history.replaceState) {
+        var url = new URL(window.location.href);
+        url.searchParams.set('variant', variant.id);
+        window.history.replaceState({}, '', url.toString());
+      }
+
+      // Update selected label text
+      document.querySelectorAll('.product-option').forEach(function (group) {
+        var checked = group.querySelector('input[type="radio"]:checked');
+        var label = group.querySelector('[class*="js-selected"]');
+        if (checked && label) label.textContent = checked.value;
+      });
+    }
+
+    document.querySelectorAll('.product-option__value input').forEach(function (radio) {
+      radio.addEventListener('change', updateVariant);
     });
+    updateVariant(); // run on load to sync state
   })();
 </script>
 

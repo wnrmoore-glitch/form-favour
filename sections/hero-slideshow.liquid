@@ -13,14 +13,20 @@
             class="slideshow__image"
           >
         {%- else -%}
-          {%- assign fb = collections[block.settings.collection] -%}
-          {%- if fb == blank or fb.image == blank %}{%- assign fb = collections['shop-all'] -%}{% endif -%}
-          {%- if fb.image -%}
-            <img src="{{ fb.image | image_url: width: 2000 }}" alt="{{ block.settings.heading | escape }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" class="slideshow__image">
-          {%- elsif fb.products.first.featured_image -%}
-            <img src="{{ fb.products.first.featured_image | image_url: width: 2000 }}" alt="{{ block.settings.heading | escape }}" class="slideshow__image">
+          {%- assign slide_index = forloop.index0 -%}
+          {%- if slide_index == 0 -%}
+            <img src="https://cdn.shopify.com/s/files/1/0733/9887/8359/files/premium_photo-1674440622933-fb7a33f96337.jpg?v=1780189800" alt="{{ block.settings.heading | escape }}" loading="eager" fetchpriority="high" class="slideshow__image">
+          {%- elsif slide_index == 1 -%}
+            <img src="https://cdn.shopify.com/s/files/1/0733/9887/8359/files/premium_photo-1753211477791-b8d9b133d924.jpg?v=1780189800" alt="{{ block.settings.heading | escape }}" loading="lazy" class="slideshow__image">
+          {%- elsif slide_index == 2 -%}
+            <img src="https://cdn.shopify.com/s/files/1/0733/9887/8359/files/premium_photo-1678739395192-bfdd13322d34.jpg?v=1780189590" alt="{{ block.settings.heading | escape }}" loading="lazy" class="slideshow__image">
           {%- else -%}
-            <div class="slideshow__placeholder"></div>
+            {%- assign fb = collections[block.settings.collection] | default: collections['shop-all'] -%}
+            {%- if fb.image -%}
+              <img src="{{ fb.image | image_url: width: 2000 }}" alt="{{ block.settings.heading | escape }}" loading="lazy" class="slideshow__image">
+            {%- else -%}
+              <div class="slideshow__placeholder"></div>
+            {%- endif -%}
           {%- endif -%}
         {%- endif -%}
         <span class="slideshow__overlay" style="opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }}"></span>
