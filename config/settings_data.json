@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_background": "#F5F1E9",
@@ -5,7 +14,15 @@
     "color_accent": "#7B8A6E",
     "color_button": "#26292A",
     "color_button_text": "#F5F1E9",
-    "page_width": 1280
+    "page_width": 1280,
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   },
   "presets": {}
 }
