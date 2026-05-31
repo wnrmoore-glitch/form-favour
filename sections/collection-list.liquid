@@ -1,9 +1,9 @@
 <section class="collection-list section">
   <div class="page-width">
     {%- if section.settings.title != blank -%}
-      <div class="section__header text-center">
+      <div class="section__header text-center reveal">
         {%- if section.settings.eyebrow != blank -%}
-          <p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          <p class="eyebrow eyebrow--ruled">{{ section.settings.eyebrow | escape }}</p>
         {%- endif -%}
         <h2>{{ section.settings.title | escape }}</h2>
       </div>
@@ -13,7 +13,7 @@
       {%- for block in section.blocks -%}
         {%- assign coll = collections[block.settings.collection] -%}
         {%- if coll != blank -%}
-          <a href="{{ coll.url }}" class="collection-tile" {{ block.shopify_attributes }}>
+          <a href="{{ coll.url }}" class="collection-tile reveal reveal--up reveal--d{{ forloop.index }}" {{ block.shopify_attributes }}>
             <div class="collection-tile__media">
               {%- if coll.image -%}
                 <img

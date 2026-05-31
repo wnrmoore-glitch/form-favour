@@ -326,11 +326,52 @@
   /* ---------------------------------------------------------
      INIT
      --------------------------------------------------------- */
+  /* ---------------------------------------------------------
+     SCROLL REVEAL
+     --------------------------------------------------------- */
+  function initScrollReveal() {
+    if (!window.IntersectionObserver) return;
+
+    // Reveal individual .reveal elements
+    var revealObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      revealObs.observe(el);
+    });
+
+    // Stagger product grid items
+    var gridObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var items = entry.target.querySelectorAll('.product-grid__item');
+          items.forEach(function (item, i) {
+            setTimeout(function () {
+              item.classList.add('is-visible');
+            }, i * 70);
+          });
+          gridObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.product-grid').forEach(function (grid) {
+      gridObs.observe(grid);
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     Cart.init();
     initQuickAdd();
     initPredictiveSearch();
     initSlideshows();
-    window.FFCart = Cart; // expose for debugging
+    initScrollReveal();
+    window.FFCart = Cart;
   });
 })();

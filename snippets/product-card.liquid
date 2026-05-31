@@ -4,6 +4,7 @@
 {% endcomment %}
 
 {%- assign first_image = product.featured_image -%}
+{%- assign second_image = product.images[1] -%}
 
 <div class="card" itemscope itemtype="http://schema.org/Product">
   <a href="{{ product.url }}" class="card__link" aria-label="{{ product.title | escape }}">
@@ -21,6 +22,21 @@
           loading="lazy"
           itemprop="image"
         >
+        {%- if second_image -%}
+          <img
+            class="card__media-secondary"
+            src="{{ second_image | image_url: width: 600 }}"
+            srcset="{{ second_image | image_url: width: 400 }} 400w,
+                    {{ second_image | image_url: width: 600 }} 600w,
+                    {{ second_image | image_url: width: 800 }} 800w"
+            sizes="(max-width: 749px) 50vw, (max-width: 1024px) 33vw, 20vw"
+            alt="{{ second_image.alt | escape | default: product.title | escape }}"
+            width="{{ second_image.width }}"
+            height="{{ second_image.height }}"
+            loading="lazy"
+            aria-hidden="true"
+          >
+        {%- endif -%}
       {%- else -%}
         <div class="card__media-placeholder">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>

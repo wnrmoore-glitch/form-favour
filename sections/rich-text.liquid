@@ -1,4 +1,4 @@
-<section class="rich-text section rich-text--{{ section.settings.style }}">
+<section class="rich-text section rich-text--{{ section.settings.style }} reveal">
   <div class="page-width">
     <div class="rich-text__inner">
       {%- if section.settings.eyebrow != blank -%}
@@ -52,7 +52,8 @@
       "options": [
         { "value": "white", "label": "White" },
         { "value": "cream", "label": "Cream" },
-        { "value": "dark", "label": "Dark (charcoal)" }
+        { "value": "dark", "label": "Dark (charcoal)" },
+        { "value": "forest", "label": "Forest (with accent border)" }
       ],
       "default": "cream"
     },

@@ -987,3 +987,228 @@ footer.footer,
 .jdgm-rev { border-bottom: var(--ff-border) !important; padding: 1.5rem 0 !important; }
 .jdgm-histogram__bar-fill { background: var(--ff-sage) !important; }
 .jdgm-summary__rating { font-family: var(--ff-font-heading) !important; color: var(--ff-charcoal) !important; }
+
+
+/* ============================================================
+   24  SCROLL REVEAL
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(.25,.46,.45,.94),
+              transform 0.7s cubic-bezier(.25,.46,.45,.94);
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+.reveal--up   { transform: translateY(28px); }
+.reveal--left { transform: translateX(-28px); }
+.reveal--right{ transform: translateX(28px); }
+.reveal.is-visible { transform: translate(0); }
+.reveal--d1 { transition-delay: 0.08s; }
+.reveal--d2 { transition-delay: 0.16s; }
+.reveal--d3 { transition-delay: 0.24s; }
+.reveal--d4 { transition-delay: 0.32s; }
+.reveal--d5 { transition-delay: 0.40s; }
+.reveal--d6 { transition-delay: 0.48s; }
+
+
+/* ============================================================
+   25  GRAIN TEXTURE OVERLAY
+   ============================================================ */
+body::after {
+  content: '';
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 9999;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+
+/* ============================================================
+   26  MARQUEE TRUST BAR
+   ============================================================ */
+.trust-bar--marquee { overflow: hidden; }
+.trust-bar__marquee-track {
+  display: flex;
+  width: max-content;
+  animation: ff-marquee 36s linear infinite;
+}
+.trust-bar__marquee-track:hover { animation-play-state: paused; }
+.trust-bar__marquee-inner { display: flex; gap: 0; }
+@keyframes ff-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.trust-bar__marquee-item {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0 2.5rem;
+  font-size: 0.72rem; letter-spacing: 0.13em; text-transform: uppercase;
+  color: var(--ff-cream); white-space: nowrap;
+}
+.trust-bar__marquee-item svg { color: var(--ff-gold); flex-shrink: 0; }
+.trust-bar__marquee-sep {
+  display: inline-flex; align-items: center;
+  color: var(--ff-gold); opacity: 0.5; font-size: 1rem;
+  padding: 0 0.5rem;
+}
+
+
+/* ============================================================
+   27  COLLECTION TILES — CINEMATIC HOVER
+   ============================================================ */
+.collection-tile__content {
+  transform: translateY(0.5rem);
+  transition: transform 0.45s cubic-bezier(.25,.46,.45,.94);
+}
+.collection-tile:hover .collection-tile__content { transform: translateY(0); }
+.collection-tile__cta {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 0.35s ease 0.1s, transform 0.35s ease 0.1s;
+}
+.collection-tile__cta::after {
+  content: '';
+  display: block; height: 1px; width: 0;
+  background: var(--ff-cream); opacity: 0.8;
+  transition: width 0.4s ease 0.2s;
+}
+.collection-tile:hover .collection-tile__cta { opacity: 1; transform: translateY(0); }
+.collection-tile:hover .collection-tile__cta::after { width: 32px; }
+.collection-tile__overlay {
+  transition: background 0.5s ease;
+}
+.collection-tile:hover .collection-tile__overlay {
+  background: linear-gradient(to top, rgba(38,48,40,0.82) 0%, rgba(38,48,40,0.2) 50%, transparent 100%);
+}
+.collection-tile__title {
+  transform: translateY(0);
+  transition: transform 0.45s cubic-bezier(.25,.46,.45,.94);
+}
+
+
+/* ============================================================
+   28  PRODUCT CARD — SECOND IMAGE HOVER
+   ============================================================ */
+.card__media-secondary {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.55s cubic-bezier(.25,.46,.45,.94);
+  z-index: 1;
+}
+.card:hover .card__media-secondary { opacity: 1; }
+.card__media img:first-of-type {
+  transition: transform 0.55s ease, opacity 0.55s ease;
+}
+.card:hover .card__media img:first-of-type { transform: scale(1.03); }
+
+
+/* ============================================================
+   29  HERO — ARCHITECTURAL TEXT (no box)
+   ============================================================ */
+.slideshow__box--bare {
+  background: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  max-width: 700px;
+}
+.slideshow__box--bare .slideshow__heading {
+  color: var(--ff-cream) !important;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.35);
+}
+.slideshow__box--bare .slideshow__eyebrow {
+  color: var(--ff-gold) !important;
+  text-shadow: none;
+}
+.slideshow__box--bare .slideshow__subtext {
+  color: rgba(245,240,232,0.9) !important;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.3);
+}
+.slideshow__content--bottom {
+  align-items: flex-end;
+  padding-bottom: 4rem;
+}
+
+/* Terracotta left-border accent on hero text */
+.slideshow__box--bare::before {
+  content: '';
+  display: block; width: 3px; height: 3.5rem;
+  background: var(--ff-sage);
+  margin-bottom: 1.25rem;
+}
+
+
+/* ============================================================
+   30  SECTION EYEBROW WITH RULE
+   ============================================================ */
+.eyebrow--ruled {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; margin-bottom: 0.75rem;
+}
+.eyebrow--ruled::before,
+.eyebrow--ruled::after {
+  content: ''; flex: 0 0 32px; height: 1px;
+  background: var(--ff-gold); opacity: 0.6;
+}
+
+
+/* ============================================================
+   31  PRODUCT GRID — STAGGER ANIMATION
+   ============================================================ */
+.product-grid__item { opacity: 0; transform: translateY(20px); }
+.product-grid__item.is-visible {
+  opacity: 1; transform: translateY(0);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+
+/* ============================================================
+   32  FEATURED COLLECTION HEADER REFINEMENTS
+   ============================================================ */
+.section__header .eyebrow { margin-bottom: 0.5rem; }
+.section__header h2 { letter-spacing: 0.03em; }
+
+
+/* ============================================================
+   33  RICH TEXT — SPLIT LAYOUT OPTION
+   ============================================================ */
+.rich-text--forest {
+  background: var(--ff-charcoal);
+  color: var(--ff-cream);
+  padding: 5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.rich-text--forest::before {
+  content: '';
+  position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+  background: linear-gradient(to bottom, var(--ff-sage), var(--ff-gold));
+}
+.rich-text--forest .rich-text__heading,
+.rich-text--forest .eyebrow { color: var(--ff-cream) !important; }
+.rich-text--forest .eyebrow { color: var(--ff-gold) !important; }
+.rich-text--forest .rich-text__content { color: rgba(245,240,232,0.75); }
+.rich-text--forest .button--secondary {
+  border-color: rgba(245,240,232,0.5) !important;
+  color: var(--ff-cream) !important;
+}
+.rich-text--forest .button--secondary:hover {
+  background: var(--ff-sage) !important;
+  border-color: var(--ff-sage) !important;
+}
+
+
+/* ============================================================
+   34  ANNOUNCEMENT BAR — SUBTLE PULSE
+   ============================================================ */
+.announcement-bar a {
+  position: relative;
+}
+.announcement-bar a::after {
+  content: ''; position: absolute; bottom: -1px; left: 0;
+  width: 0; height: 1px; background: var(--ff-cream);
+  transition: width 0.3s ease;
+}
+.announcement-bar a:hover::after { width: 100%; }

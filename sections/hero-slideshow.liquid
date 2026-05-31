@@ -32,8 +32,8 @@
         <span class="slideshow__overlay" style="opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};"></span>
       </div>
 
-      <div class="slideshow__content slideshow__content--{{ block.settings.position }}">
-        <div class="slideshow__box">
+      <div class="slideshow__content slideshow__content--{{ block.settings.position }} slideshow__content--bottom">
+        <div class="slideshow__box slideshow__box--bare">
           {%- if block.settings.eyebrow != blank -%}<p class="eyebrow slideshow__eyebrow">{{ block.settings.eyebrow | escape }}</p>{%- endif -%}
           {%- if block.settings.heading != blank -%}<h2 class="slideshow__heading">{{ block.settings.heading | escape }}</h2>{%- endif -%}
           {%- if block.settings.subtext != blank -%}<p class="slideshow__subtext">{{ block.settings.subtext | escape }}</p>{%- endif -%}
