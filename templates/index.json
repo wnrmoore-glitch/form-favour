@@ -1,17 +1,53 @@
 {
   "sections": {
     "hero": {
-      "type": "hero-banner",
+      "type": "hero-slideshow",
       "settings": {
-        "heading": "Strength in Everyday.",
-        "subtext": "Training gear and everyday essentials, chosen for form as much as function.",
-        "button_label": "Shop all",
-        "button_link": "shopify://collections/shop-all",
         "height": 650,
-        "overlay_opacity": 30,
-        "content_position": "left",
-        "eyebrow": "Train. Move. Recover."
-      }
+        "autoplay_speed": 6
+      },
+      "blocks": {
+        "s1": {
+          "type": "slide",
+          "settings": {
+            "collection": "shop-all",
+            "overlay_opacity": 30,
+            "position": "left",
+            "eyebrow": "Train. Move. Recover.",
+            "heading": "Strength in Everyday.",
+            "subtext": "Training gear and everyday essentials, chosen for form as much as function.",
+            "button_label": "Shop all",
+            "button_link": "shopify://collections/shop-all"
+          }
+        },
+        "s2": {
+          "type": "slide",
+          "settings": {
+            "collection": "training-fitness",
+            "overlay_opacity": 35,
+            "position": "left",
+            "eyebrow": "Build your routine",
+            "heading": "Train Anywhere.",
+            "subtext": "Resistance bands, trainers and recovery tools for home or on the move.",
+            "button_label": "Shop training",
+            "button_link": "shopify://collections/training-fitness"
+          }
+        },
+        "s3": {
+          "type": "slide",
+          "settings": {
+            "collection": "bags-accessories",
+            "overlay_opacity": 35,
+            "position": "left",
+            "eyebrow": "Carry it all",
+            "heading": "Built to Go.",
+            "subtext": "Waterproof duffels and totes that keep up with every session.",
+            "button_label": "Shop bags",
+            "button_link": "shopify://collections/bags-accessories"
+          }
+        }
+      },
+      "block_order": ["s1", "s2", "s3"]
     },
     "trust": {
       "type": "trust-bar",

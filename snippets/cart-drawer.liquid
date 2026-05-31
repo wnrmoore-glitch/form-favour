@@ -1,0 +1,81 @@
+{% comment %} Slide-out AJAX cart drawer. Populated by theme.js. {% endcomment %}
+<div class="cart-drawer" data-cart-drawer aria-hidden="true" role="dialog" aria-label="Shopping bag">
+  <div class="cart-drawer__overlay" data-cart-close></div>
+  <aside class="cart-drawer__panel" role="document">
+    <header class="cart-drawer__header">
+      <h2 class="cart-drawer__title">Your bag</h2>
+      <button class="cart-drawer__close" data-cart-close aria-label="Close bag">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </header>
+
+    <!-- Free shipping progress -->
+    <div class="cart-drawer__shipping" data-shipping-bar>
+      <p class="cart-drawer__shipping-msg" data-shipping-msg></p>
+      <div class="cart-drawer__shipping-track"><span class="cart-drawer__shipping-fill" data-shipping-fill></span></div>
+    </div>
+
+    <div class="cart-drawer__body" data-cart-body>
+      <div class="cart-drawer__empty"><p>Your bag is empty.</p></div>
+    </div>
+
+    <footer class="cart-drawer__footer" data-cart-footer style="display:none">
+      <div class="cart-drawer__subtotal">
+        <span>Subtotal</span>
+        <span data-cart-subtotal>{{ cart.total_price | money }}</span>
+      </div>
+      <p class="cart-drawer__note">Shipping & taxes calculated at checkout.</p>
+      <a href="/checkout" class="button cart-drawer__checkout">Checkout</a>
+      <a href="/cart" class="cart-drawer__viewcart">View full bag</a>
+    </footer>
+  </aside>
+</div>
+
+<style>
+  .cart-drawer { position: fixed; inset: 0; z-index: 400; pointer-events: none; }
+  .cart-drawer[aria-hidden="false"] { pointer-events: all; }
+  .cart-drawer__overlay {
+    position: absolute; inset: 0; background: rgba(38,41,42,0.5);
+    opacity: 0; transition: opacity 0.3s ease;
+  }
+  .cart-drawer[aria-hidden="false"] .cart-drawer__overlay { opacity: 1; }
+  .cart-drawer__panel {
+    position: absolute; top: 0; right: 0; bottom: 0;
+    width: 90vw; max-width: 420px;
+    background: var(--ff-cream); display: flex; flex-direction: column;
+    transform: translateX(100%); transition: transform 0.32s cubic-bezier(.4,0,.2,1);
+    box-shadow: -8px 0 40px rgba(38,41,42,0.12);
+  }
+  .cart-drawer[aria-hidden="false"] .cart-drawer__panel { transform: translateX(0); }
+  .cart-drawer__header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 1.5rem; border-bottom: var(--ff-border);
+  }
+  .cart-drawer__title { margin: 0; font-size: 1.15rem; letter-spacing: 0.04em; }
+  .cart-drawer__close { background: none; border: none; cursor: pointer; color: var(--ff-charcoal); display: flex; }
+  /* Free shipping */
+  .cart-drawer__shipping { padding: 1rem 1.5rem 0.5rem; }
+  .cart-drawer__shipping-msg { font-size: 0.78rem; margin: 0 0 0.5rem; color: var(--ff-charcoal); text-align: center; }
+  .cart-drawer__shipping-track { height: 5px; background: var(--ff-cream-dk); border-radius: 99px; overflow: hidden; }
+  .cart-drawer__shipping-fill { display: block; height: 100%; width: 0; background: var(--ff-sage); border-radius: 99px; transition: width 0.4s ease; }
+  /* Body */
+  .cart-drawer__body { flex: 1; overflow-y: auto; padding: 1rem 1.5rem; }
+  .cart-drawer__empty { text-align: center; padding: 3rem 0; color: var(--ff-stone); }
+  .cart-drawer__empty .button { margin-top: 1rem; }
+  .cart-drawer__item { display: grid; grid-template-columns: 64px 1fr; gap: 1rem; padding: 1rem 0; border-bottom: var(--ff-border); }
+  .cart-drawer__img img { width: 64px; height: 64px; object-fit: cover; border-radius: var(--ff-radius); }
+  .cart-drawer__name { font-family: var(--ff-font-heading); font-size: 0.95rem; color: var(--ff-charcoal); text-decoration: none; line-height: 1.3; }
+  .cart-drawer__variant { font-size: 0.75rem; color: var(--ff-stone); margin: 0.2rem 0; }
+  .cart-drawer__row { display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem; }
+  .cart-drawer__qty { display: inline-flex; align-items: center; border: var(--ff-border-dk); border-radius: var(--ff-radius); }
+  .cart-drawer__qty button { width: 28px; height: 30px; background: none; border: none; cursor: pointer; color: var(--ff-charcoal); font-size: 0.95rem; }
+  .cart-drawer__qty span { min-width: 28px; text-align: center; font-size: 0.82rem; }
+  .cart-drawer__price { font-weight: 600; font-size: 0.9rem; }
+  .cart-drawer__remove { background: none; border: none; padding: 0; margin-top: 0.4rem; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ff-stone); text-decoration: underline; cursor: pointer; }
+  /* Footer */
+  .cart-drawer__footer { padding: 1.25rem 1.5rem; border-top: var(--ff-border); background: var(--ff-cream); }
+  .cart-drawer__subtotal { display: flex; justify-content: space-between; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.25rem; }
+  .cart-drawer__note { font-size: 0.72rem; color: var(--ff-stone); margin: 0 0 1rem; }
+  .cart-drawer__checkout { width: 100%; }
+  .cart-drawer__viewcart { display: block; text-align: center; margin-top: 0.75rem; font-size: 0.78rem; color: var(--ff-stone); text-decoration: underline; }
+</style>

@@ -56,20 +56,18 @@
 
   {%- sections 'footer' -%}
 
-  <!-- Minimal cart drawer JS -->
+  {%- render 'cart-drawer' -%}
+
+  <!-- Theme config for JS -->
   <script>
-    // Cart item count refresh
-    document.addEventListener('DOMContentLoaded', function () {
-      fetch('/cart.js')
-        .then(r => r.json())
-        .then(cart => {
-          document.querySelectorAll('.js-cart-count').forEach(el => {
-            el.textContent = cart.item_count;
-            el.style.display = cart.item_count > 0 ? 'flex' : 'none';
-          });
-        });
-    });
+    window.FF = {
+      currencySymbol: {{ shop.currency | json }} == 'GBP' ? '£' : '{{ shop.currency }}',
+      freeShippingThreshold: 5000,
+      allProductsUrl: {{ routes.all_products_collection_url | json }},
+      cartUrl: {{ routes.cart_url | json }}
+    };
   </script>
+  {{ 'theme.js' | asset_url | script_tag }}
 
 </body>
 </html>

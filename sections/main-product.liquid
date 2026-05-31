@@ -6,10 +6,12 @@
 
     <!-- Media gallery -->
     <div class="product-gallery">
-      <div class="product-gallery__main" id="product-featured-image">
+      <div class="product-gallery__main" id="product-featured-image" data-product-zoom title="Click to enlarge">
         {%- if product.featured_image -%}
           <img
             id="product-main-image"
+            data-zoom-trigger
+            data-index="0"
             src="{{ product.featured_image | image_url: width: 900 }}"
             srcset="{{ product.featured_image | image_url: width: 600 }} 600w,
                     {{ product.featured_image | image_url: width: 900 }} 900w,
@@ -132,6 +134,31 @@
   </div>
 </div>
 
+{%- comment -%} Full-size image data for the lightbox {%- endcomment -%}
+<script type="application/json" data-product-images>
+[
+  {%- for image in product.images -%}
+    {{ image | image_url: width: 1600 | json }}{%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+]
+</script>
+
+<!-- Image lightbox -->
+<div class="media-lightbox" data-lightbox aria-hidden="true" role="dialog" aria-label="Product image">
+  <button class="media-lightbox__close" data-lightbox-close aria-label="Close">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  {%- if product.images.size > 1 -%}
+    <button class="media-lightbox__nav media-lightbox__nav--prev" data-lightbox-prev aria-label="Previous">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="media-lightbox__nav media-lightbox__nav--next" data-lightbox-next aria-label="Next">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  {%- endif -%}
+  <img data-lightbox-img src="" alt="{{ product.title | escape }}">
+</div>
+
 <style>
   .product-page__grid {
     display: grid;
@@ -195,13 +222,50 @@
     // Thumbnail switcher
     var thumbs = document.querySelectorAll('.product-gallery__thumb');
     var mainImg = document.getElementById('product-main-image');
-    thumbs.forEach(function (thumb) {
+    var currentIndex = 0;
+    thumbs.forEach(function (thumb, i) {
       thumb.addEventListener('click', function () {
         thumbs.forEach(function (t) { t.classList.remove('product-gallery__thumb--active'); });
         this.classList.add('product-gallery__thumb--active');
-        if (mainImg) mainImg.src = this.dataset.src;
+        if (mainImg) { mainImg.src = this.dataset.src; mainImg.dataset.index = i; }
+        currentIndex = i;
       });
     });
+
+    // ---- Lightbox (click main image to enlarge) ----
+    var lightbox = document.querySelector('[data-lightbox]');
+    var dataEl = document.querySelector('[data-product-images]');
+    var images = [];
+    try { images = dataEl ? JSON.parse(dataEl.textContent) : []; } catch (e) {}
+    if (lightbox && images.length) {
+      var lbImg = lightbox.querySelector('[data-lightbox-img]');
+      function openLB(i) {
+        currentIndex = (i + images.length) % images.length;
+        lbImg.src = images[currentIndex];
+        lightbox.setAttribute('aria-hidden', 'false');
+        lightbox.setAttribute('data-open', '');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLB() {
+        lightbox.removeAttribute('data-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+      if (mainImg) mainImg.addEventListener('click', function () { openLB(parseInt(mainImg.dataset.index || 0, 10)); });
+      lbImg.addEventListener('click', closeLB);
+      lightbox.querySelectorAll('[data-lightbox-close]').forEach(function (b) { b.addEventListener('click', closeLB); });
+      var nextBtn = lightbox.querySelector('[data-lightbox-next]');
+      var prevBtn = lightbox.querySelector('[data-lightbox-prev]');
+      if (nextBtn) nextBtn.addEventListener('click', function (e) { e.stopPropagation(); openLB(currentIndex + 1); });
+      if (prevBtn) prevBtn.addEventListener('click', function (e) { e.stopPropagation(); openLB(currentIndex - 1); });
+      lightbox.addEventListener('click', function (e) { if (e.target === lightbox) closeLB(); });
+      document.addEventListener('keydown', function (e) {
+        if (lightbox.getAttribute('aria-hidden') === 'true') return;
+        if (e.key === 'Escape') closeLB();
+        if (e.key === 'ArrowRight' && nextBtn) openLB(currentIndex + 1);
+        if (e.key === 'ArrowLeft' && prevBtn) openLB(currentIndex - 1);
+      });
+    }
     // Quantity stepper
     var input = document.querySelector('.quantity__input');
     document.querySelector('.js-qty-minus')?.addEventListener('click', function () {

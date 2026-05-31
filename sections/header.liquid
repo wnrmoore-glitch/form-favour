@@ -50,9 +50,9 @@
     <!-- Icons -->
     <div class="header__icons">
       <!-- Search -->
-      <a href="/search" class="header__icon" aria-label="Search">
+      <button class="header__icon" aria-label="Search" data-search-open type="button">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      </a>
+      </button>
       <!-- Account -->
       {%- if shop.customer_accounts_enabled -%}
         <a href="{%- if customer -%}/account{%- else -%}/account/login{%- endif -%}" class="header__icon" aria-label="Account">
@@ -60,7 +60,7 @@
         </a>
       {%- endif -%}
       <!-- Cart -->
-      <a href="/cart" class="header__icon header__icon--cart" aria-label="Cart ({{ cart.item_count }} items)">
+      <a href="/cart" class="header__icon header__icon--cart" aria-label="Cart ({{ cart.item_count }} items)" data-cart-open>
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         {%- if cart.item_count > 0 -%}
           <span class="cart-count-bubble js-cart-count">{{ cart.item_count }}</span>
@@ -94,6 +94,21 @@
         {%- endfor -%}
       </ul>
     </nav>
+  </div>
+
+  <!-- Predictive search overlay -->
+  <div class="search-overlay" data-search-overlay aria-hidden="true">
+    <div class="search-overlay__backdrop" data-search-close></div>
+    <div class="search-overlay__panel" data-predictive-search>
+      <form action="/search" method="get" role="search" class="search-overlay__form">
+        <svg class="search-overlay__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="search" name="q" placeholder="Search products…" autocomplete="off" aria-label="Search">
+        <button type="button" class="search-overlay__close" data-search-close aria-label="Close search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </form>
+      <div class="predictive__results" data-predictive-results></div>
+    </div>
   </div>
 
 </header>
