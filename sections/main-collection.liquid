@@ -10,27 +10,47 @@
       {%- endif -%}
     </div>
 
-    <!-- Results count + sort -->
+    <!-- Results count + sort + column picker -->
     <div class="collection-toolbar">
       <p class="collection-toolbar__count">
         {{ collection.products_count }} product{% if collection.products_count != 1 %}s{% endif %}
       </p>
-      <div class="collection-toolbar__sort">
-        <label for="sort-by" class="sr-only">Sort by</label>
-        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
-        <select name="sort_by" id="sort-by" class="select__select" onchange="location.search='?sort_by='+this.value">
-          {%- for option in collection.sort_options -%}
-            <option value="{{ option.value }}"{% if option.value == sort_by %} selected{% endif %}>
-              {{ option.name }}
-            </option>
+      <div class="collection-toolbar__right">
+        <!-- Column picker -->
+        <div class="col-picker" aria-label="Products per row">
+          {%- assign cols = '3,4,5,6' | split: ',' -%}
+          {%- for c in cols -%}
+            <button
+              class="col-picker__btn{% if c == section.settings.columns_desktop %} col-picker__btn--active{% endif %}"
+              data-cols="{{ c }}"
+              aria-label="{{ c }} per row"
+              aria-pressed="{% if c == section.settings.columns_desktop %}true{% else %}false{% endif %}"
+            >{{ c }}</button>
           {%- endfor -%}
-        </select>
+        </div>
+        <!-- Sort -->
+        <div class="collection-toolbar__sort">
+          <label for="sort-by" class="sr-only">Sort by</label>
+          {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+          <select name="sort_by" id="sort-by" class="select__select" onchange="location.search='?sort_by='+this.value">
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value }}"{% if option.value == sort_by %} selected{% endif %}>
+                {{ option.name }}
+              </option>
+            {%- endfor -%}
+          </select>
+        </div>
       </div>
     </div>
 
     <!-- Product grid -->
     {%- if collection.products.size > 0 -%}
-      <ul class="product-grid product-grid--{{ section.settings.columns_desktop }}-col list-unstyled" role="list">
+      <ul
+        id="product-grid"
+        class="product-grid list-unstyled"
+        role="list"
+        style="--grid-cols: {{ section.settings.columns_desktop }};"
+      >
         {%- for product in collection.products -%}
           <li class="product-grid__item">
             {%- render 'product-card', product: product -%}
@@ -66,17 +86,52 @@
 {%- endpaginate -%}
 
 <style>
-  .collection-header { text-align: center; margin-bottom: 2.5rem; }
-  .collection__title { margin: 0 0 0.75rem; }
+  .collection-header { text-align: center; margin-bottom: 2rem; }
+  .collection__title { margin: 0 0 0.5rem; }
   .collection__description { color: var(--ff-stone); max-width: 600px; margin: 0 auto; }
+
   .collection-toolbar {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 1rem 0; border-top: var(--ff-border); border-bottom: var(--ff-border);
-    margin-bottom: 2rem;
+    padding: 0.75rem 0; border-top: var(--ff-border); border-bottom: var(--ff-border);
+    margin-bottom: 1.5rem; gap: 1rem;
   }
   .collection-toolbar__count { font-size: 0.78rem; color: var(--ff-stone); letter-spacing: 0.06em; margin: 0; }
+  .collection-toolbar__right { display: flex; align-items: center; gap: 1rem; }
   .collection-toolbar__sort select { font-size: 0.8rem; }
-  .pagination { margin-top: 3rem; }
+
+  /* Column picker */
+  .col-picker { display: flex; gap: 0.25rem; }
+  .col-picker__btn {
+    width: 30px; height: 30px;
+    background: none; border: var(--ff-border); border-radius: var(--ff-radius);
+    font-size: 0.75rem; font-family: var(--ff-font-body); color: var(--ff-stone);
+    cursor: pointer; transition: all var(--ff-transition);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .col-picker__btn:hover { border-color: var(--ff-charcoal); color: var(--ff-charcoal); }
+  .col-picker__btn--active {
+    background: var(--ff-charcoal); border-color: var(--ff-charcoal); color: var(--ff-cream);
+  }
+
+  /* Product grid */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-cols, 4), 1fr);
+    gap: 1.25rem;
+    margin: 0; padding: 0;
+  }
+  .product-grid__item { min-width: 0; }
+
+  /* Responsive breakpoints */
+  @media (max-width: 1024px) {
+    .product-grid { grid-template-columns: repeat(min(var(--grid-cols, 4), 3), 1fr); }
+  }
+  @media (max-width: 749px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .col-picker { display: none; }
+  }
+
+  .pagination { margin-top: 2.5rem; }
   .pagination__list { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin: 0; padding: 0; }
   .pagination__item {
     display: flex; align-items: center; justify-content: center;
@@ -93,6 +148,23 @@
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
 </style>
 
+<script>
+(function () {
+  var grid = document.getElementById('product-grid');
+  if (!grid) return;
+  document.querySelectorAll('.col-picker__btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var cols = btn.dataset.cols;
+      grid.style.setProperty('--grid-cols', cols);
+      document.querySelectorAll('.col-picker__btn').forEach(function (b) {
+        b.classList.toggle('col-picker__btn--active', b === btn);
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+    });
+  });
+})();
+</script>
+
 {% schema %}
 {
   "name": "Collection products",
@@ -100,14 +172,14 @@
     {
       "type": "select",
       "id": "columns_desktop",
-      "label": "Columns on desktop",
+      "label": "Default columns on desktop",
       "options": [
-        { "value": "2", "label": "2" },
         { "value": "3", "label": "3" },
         { "value": "4", "label": "4" },
-        { "value": "5", "label": "5" }
+        { "value": "5", "label": "5" },
+        { "value": "6", "label": "6" }
       ],
-      "default": "5"
+      "default": "4"
     }
   ]
 }

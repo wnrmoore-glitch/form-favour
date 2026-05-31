@@ -46,10 +46,8 @@
   --ff-white:      #FFFFFF;
 
   /* Typography */
-  --ff-font-heading: "Cormorant Garamond", "Playfair Display",
-                     "Times New Roman", Georgia, serif;
-  --ff-font-body:    "Inter", "Work Sans", -apple-system,
-                     "Helvetica Neue", Arial, sans-serif;
+  --ff-font-heading: "Montserrat", "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --ff-font-body:    "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
 
   /* Sizing */
   --ff-radius:     3px;
@@ -57,7 +55,7 @@
   --ff-border:     1px solid rgba(38, 41, 42, 0.12);
   --ff-border-dk:  1px solid rgba(38, 41, 42, 0.24);
   --ff-transition: 0.22s ease;
-  --ff-section-gap: 4rem;
+  --ff-section-gap: 2.5rem;
 }
 
 
@@ -85,16 +83,16 @@ img { display: block; max-width: 100%; height: auto; }
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: var(--ff-font-heading) !important;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   line-height: 1.15;
   color: var(--ff-charcoal);
 }
 
-h1, .h1 { font-size: clamp(2rem, 4vw, 3.25rem); }
-h2, .h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
-h3, .h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
-h4, .h4 { font-size: 1.15rem; }
+h1, .h1 { font-size: clamp(1.85rem, 4vw, 3rem); }
+h2, .h2 { font-size: clamp(1.35rem, 3vw, 2rem); }
+h3, .h3 { font-size: clamp(1.1rem, 2.5vw, 1.4rem); }
+h4, .h4 { font-size: 1.05rem; }
 
 /* Subheadings / eyebrow labels */
 .eyebrow,
@@ -189,7 +187,7 @@ header[class*="header"] {
 .dropdown-menu {
   background-color: var(--ff-cream) !important;
   border: var(--ff-border);
-  border-top: 2px solid var(--ff-sage);
+  border-top: none;
   box-shadow: 0 8px 24px rgba(38, 41, 42, 0.08);
 }
 
@@ -670,7 +668,7 @@ label, .field__label {
 
 /* Tighter on consecutive sections */
 .shopify-section + .shopify-section {
-  padding-top: calc(var(--ff-section-gap) * 0.65);
+  padding-top: calc(var(--ff-section-gap) * 0.7);
 }
 
 .section__header { margin-bottom: 2.5rem; }
@@ -808,7 +806,7 @@ footer.footer,
    19  MOBILE OVERRIDES  (≤ 749 px)
    ============================================================ */
 @media screen and (max-width: 749px) {
-  :root { --ff-section-gap: 2.5rem; }
+  :root { --ff-section-gap: 1.75rem; }
 
   .banner__box,
   .hero__content,
