@@ -1,0 +1,78 @@
+{% comment %}
+  Size guide tab — rendered inside product accordion.
+  Only shows for relevant product types.
+{% endcomment %}
+
+{%- assign sized_types = 'Activewear,Winter Accessories' | split: ',' -%}
+{%- assign show_size_guide = false -%}
+{%- for t in sized_types -%}
+  {%- if product.type == t -%}{%- assign show_size_guide = true -%}{%- endif -%}
+{%- endfor -%}
+{%- comment -%} Also show if product has size options {%- endcomment -%}
+{%- for option in product.options -%}
+  {%- if option == 'Size' or option == 'size' -%}{%- assign show_size_guide = true -%}{%- endif -%}
+{%- endfor -%}
+
+{%- if show_size_guide -%}
+<details class="accordion size-guide">
+  <summary class="accordion__title">Size guide</summary>
+  <div class="accordion__content size-guide__content">
+
+    {%- if product.type == 'Winter Accessories' -%}
+      <h4>Hat sizing</h4>
+      <table class="size-guide__table">
+        <thead><tr><th>Size</th><th>Head circumference</th><th>Fits</th></tr></thead>
+        <tbody>
+          <tr><td>One size / elastic</td><td>55–61 cm</td><td>Most adults</td></tr>
+        </tbody>
+      </table>
+      <p class="size-guide__tip">Measure around the widest part of your head, about 1cm above your ears.</p>
+
+    {%- elsif product.type == 'Activewear' -%}
+      <h4>Women's activewear sizing</h4>
+      <table class="size-guide__table">
+        <thead><tr><th>Size</th><th>UK</th><th>Bust (cm)</th><th>Waist (cm)</th><th>Hip (cm)</th></tr></thead>
+        <tbody>
+          <tr><td>XS</td><td>6–8</td><td>80–84</td><td>60–64</td><td>86–90</td></tr>
+          <tr><td>S</td><td>8–10</td><td>84–88</td><td>64–68</td><td>90–94</td></tr>
+          <tr><td>M</td><td>10–12</td><td>88–93</td><td>68–73</td><td>94–99</td></tr>
+          <tr><td>L</td><td>12–14</td><td>93–98</td><td>73–78</td><td>99–104</td></tr>
+          <tr><td>XL</td><td>14–16</td><td>98–103</td><td>78–83</td><td>104–109</td></tr>
+          <tr><td>2XL</td><td>16–18</td><td>103–108</td><td>83–88</td><td>109–114</td></tr>
+        </tbody>
+      </table>
+      <p class="size-guide__tip">When between sizes, size up for comfort during workouts.</p>
+
+    {%- else -%}
+      <h4>General sizing</h4>
+      <table class="size-guide__table">
+        <thead><tr><th>Size</th><th>UK</th><th>EU</th><th>US</th></tr></thead>
+        <tbody>
+          <tr><td>XS</td><td>6–8</td><td>34–36</td><td>2–4</td></tr>
+          <tr><td>S</td><td>8–10</td><td>36–38</td><td>4–6</td></tr>
+          <tr><td>M</td><td>10–12</td><td>38–40</td><td>6–8</td></tr>
+          <tr><td>L</td><td>12–14</td><td>40–42</td><td>8–10</td></tr>
+          <tr><td>XL</td><td>14–16</td><td>42–44</td><td>10–12</td></tr>
+        </tbody>
+      </table>
+    {%- endif -%}
+
+    <p class="size-guide__help">Not sure? <a href="/pages/contact">Contact us</a> and we'll help you choose.</p>
+  </div>
+</details>
+
+<style>
+  .size-guide__content { padding-bottom: 1.5rem; }
+  .size-guide__table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 0.75rem 0; }
+  .size-guide__table th {
+    background: var(--ff-cream-dk); text-align: left;
+    padding: 0.5rem 0.75rem; font-size: 0.72rem;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ff-stone);
+  }
+  .size-guide__table td { padding: 0.5rem 0.75rem; border-bottom: var(--ff-border); }
+  .size-guide__table tr:last-child td { border-bottom: none; }
+  .size-guide__tip { font-size: 0.78rem; color: var(--ff-stone); margin: 0.5rem 0 0; font-style: italic; }
+  .size-guide__help { font-size: 0.8rem; color: var(--ff-stone); margin-top: 1rem; }
+  .size-guide__help a { color: var(--ff-sage-dk); }
+</style>
+{%- endif -%}

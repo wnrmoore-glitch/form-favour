@@ -124,12 +124,25 @@
 
       {%- endform -%}
 
-      <!-- Description -->
-      {%- if product.description != blank -%}
-        <div class="product__description rte">
-          {{ product.description }}
-        </div>
-      {%- endif -%}
+      <!-- Accordion tabs -->
+      <div class="product__accordions">
+        {%- if product.description != blank -%}
+          <details class="accordion" open>
+            <summary class="accordion__title">Description</summary>
+            <div class="accordion__content product__description rte">{{ product.description }}</div>
+          </details>
+        {%- endif -%}
+
+        {%- render 'size-guide', product: product -%}
+
+        <details class="accordion">
+          <summary class="accordion__title">Shipping & Returns</summary>
+          <div class="accordion__content">
+            <p>Free UK standard shipping on orders over £50. Delivered in 3–7 business days.</p>
+            <p>Easy 30-day returns on unused items. <a href="/pages/shipping-returns">Full details →</a></p>
+          </div>
+        </details>
+      </div>
     </div>
 
   </div>

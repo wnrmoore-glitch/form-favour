@@ -1,17 +1,70 @@
-<div class="not-found section">
-  <div class="page-width text-center">
-    <p class="not-found__code">404</p>
-    <h1 class="not-found__heading">Page not found</h1>
-    <p class="not-found__text">The page you're looking for has moved or doesn't exist.</p>
-    <a href="/" class="button">Back to home</a>
+<section class="error-404 page-width section" style="text-align:center; padding: 6rem 1rem;">
+  <p class="eyebrow">404 — Page not found</p>
+  <h1 class="error-404__heading">Lost your way?</h1>
+  <p class="error-404__sub">The page you're looking for doesn't exist — but there's plenty worth finding.</p>
+
+  <div class="error-404__actions">
+    <a href="/collections/shop-all" class="button">Shop all products</a>
+    <a href="/" class="button button--secondary">Go home</a>
   </div>
-</div>
+
+  <div class="error-404__collections">
+    <p class="eyebrow" style="margin-top:3rem">Or browse by category</p>
+    <div class="error-404__grid">
+      {%- assign shown = 0 -%}
+      {%- for collection in collections -%}
+        {%- if collection.handle != 'frontpage' and shown < 3 -%}
+          <a href="{{ collection.url }}" class="error-404__tile">
+            {%- if collection.image -%}
+              <img src="{{ collection.image | image_url: width: 400 }}" alt="{{ collection.title | escape }}" loading="lazy">
+            {%- elsif collection.products.first.featured_image -%}
+              <img src="{{ collection.products.first.featured_image | image_url: width: 400 }}" alt="{{ collection.title | escape }}" loading="lazy">
+            {%- endif -%}
+            <span class="error-404__tile-label">{{ collection.title }}</span>
+          </a>
+          {%- assign shown = shown | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="error-404__search" data-predictive-search style="max-width:480px; margin:3rem auto 0;">
+    <form action="/search" method="get" class="error-404__search-form">
+      <input type="search" name="q" placeholder="Search products…" autocomplete="off" aria-label="Search">
+      <button type="submit" class="button">Search</button>
+    </form>
+    <div class="predictive__results" data-predictive-results></div>
+  </div>
+</section>
+
 <style>
-  .not-found { padding: 6rem 1rem; text-align: center; }
-  .not-found__code { font-size: 5rem; font-weight: 300; color: var(--ff-stone-lt); line-height: 1; margin: 0; }
-  .not-found__heading { margin: 0.5rem 0 1rem; }
-  .not-found__text { color: var(--ff-stone); margin-bottom: 2rem; }
+  .error-404__heading { font-size: clamp(2.5rem, 6vw, 4.5rem) !important; margin: 0.5rem 0 1rem; }
+  .error-404__sub { color: var(--ff-stone); font-size: 1.05rem; max-width: 480px; margin: 0 auto 2rem; }
+  .error-404__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .error-404__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.25rem; }
+  .error-404__tile {
+    position: relative; border-radius: var(--ff-radius-lg); overflow: hidden;
+    aspect-ratio: 4/3; display: block; text-decoration: none;
+    background: var(--ff-cream-dk);
+  }
+  .error-404__tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .error-404__tile:hover img { transform: scale(1.05); }
+  .error-404__tile-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(to top, rgba(38,41,42,0.7), transparent);
+    color: var(--ff-cream); font-family: var(--ff-font-heading);
+    font-size: 1.1rem;
+  }
+  .error-404__search-form { display: flex; gap: 0.5rem; }
+  .error-404__search-form input { flex: 1; }
+  .error-404__search-form .button { flex-shrink: 0; }
+  @media (max-width: 749px) {
+    .error-404__grid { grid-template-columns: 1fr; }
+    .error-404__actions { flex-direction: column; align-items: center; }
+  }
 </style>
+
 {% schema %}
 { "name": "404 page", "settings": [] }
 {% endschema %}

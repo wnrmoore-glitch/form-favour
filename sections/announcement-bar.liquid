@@ -1,15 +1,55 @@
 {%- if section.settings.show_announcement -%}
 <div class="announcement-bar" role="region" aria-label="Announcement">
   <div class="announcement-bar__inner page-width">
-    {%- if section.settings.announcement_link != blank -%}
-      <a href="{{ section.settings.announcement_link }}" class="announcement-bar__link">
-        {{ section.settings.announcement_text | escape }}
-      </a>
+    {%- assign messages = section.settings.messages | split: '|' -%}
+    {%- if messages.size > 1 -%}
+      <div class="announcement-bar__rotator" data-rotator>
+        {%- for msg in messages -%}
+          <span class="announcement-bar__msg{% if forloop.first %} is-active{% endif %}">
+            {%- assign msg_trimmed = msg | strip -%}
+            {%- if section.settings.announcement_link != blank -%}
+              <a href="{{ section.settings.announcement_link }}" class="announcement-bar__link">{{ msg_trimmed | escape }}</a>
+            {%- else -%}
+              {{ msg_trimmed | escape }}
+            {%- endif -%}
+          </span>
+        {%- endfor -%}
+      </div>
     {%- else -%}
-      <p>{{ section.settings.announcement_text | escape }}</p>
+      {%- if section.settings.announcement_link != blank -%}
+        <a href="{{ section.settings.announcement_link }}" class="announcement-bar__link">{{ section.settings.messages | escape }}</a>
+      {%- else -%}
+        <p>{{ section.settings.messages | escape }}</p>
+      {%- endif -%}
     {%- endif -%}
   </div>
 </div>
+
+<style>
+  .announcement-bar__rotator { position: relative; height: 1.4em; overflow: hidden; }
+  .announcement-bar__msg {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: translateY(6px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+  .announcement-bar__msg.is-active { opacity: 1; transform: translateY(0); pointer-events: all; }
+</style>
+
+<script>
+(function () {
+  var rotator = document.querySelector('[data-rotator]');
+  if (!rotator) return;
+  var msgs = Array.prototype.slice.call(rotator.querySelectorAll('.announcement-bar__msg'));
+  if (msgs.length < 2) return;
+  var current = 0;
+  setInterval(function () {
+    msgs[current].classList.remove('is-active');
+    current = (current + 1) % msgs.length;
+    msgs[current].classList.add('is-active');
+  }, 3500);
+})();
+</script>
 {%- endif -%}
 
 {% schema %}
@@ -20,19 +60,19 @@
     {
       "type": "checkbox",
       "id": "show_announcement",
-      "label": "Show announcement",
+      "label": "Show announcement bar",
       "default": true
     },
     {
-      "type": "text",
-      "id": "announcement_text",
-      "label": "Announcement text",
-      "default": "Free UK shipping on orders over £50 · Secure checkout"
+      "type": "textarea",
+      "id": "messages",
+      "label": "Messages (separate multiple with |)",
+      "default": "Free UK shipping on orders over £50 | Easy 30-day returns | Secure checkout | UK-based support"
     },
     {
       "type": "url",
       "id": "announcement_link",
-      "label": "Link (optional)"
+      "label": "Link for all messages (optional)"
     }
   ]
 }
