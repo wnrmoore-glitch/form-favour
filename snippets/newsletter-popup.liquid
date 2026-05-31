@@ -7,8 +7,8 @@
     </button>
     <div class="newsletter-popup__content">
       <p class="eyebrow">Join the edit</p>
-      <h2 class="newsletter-popup__heading">10% off your first order</h2>
-      <p class="newsletter-popup__sub">Plus new arrivals, training tips and member-only offers.</p>
+      <h2 class="newsletter-popup__heading">Stay in the loop.</h2>
+      <p class="newsletter-popup__sub">New arrivals, training tips and member-only offers — straight to your inbox.</p>
       {% form 'customer', id: 'newsletter-popup-form' %}
         <input type="hidden" name="contact[tags]" value="newsletter">
         <div class="newsletter-popup__fields">
@@ -19,7 +19,7 @@
             required autocomplete="email"
             aria-label="Email address"
           >
-          <button type="submit" class="button newsletter-popup__btn">Get 10% off</button>
+          <button type="submit" class="button newsletter-popup__btn">Subscribe</button>
         </div>
         <p class="newsletter-popup__legal">No spam, unsubscribe any time. <a href="/pages/privacy-policy">Privacy policy</a>.</p>
       {% endform %}
