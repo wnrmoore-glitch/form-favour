@@ -56,12 +56,12 @@
     border-radius: var(--ff-radius-lg); overflow: hidden;
     aspect-ratio: 4/5; background: var(--ff-cream-dk);
   }
-  .collection-tile__media { position: absolute; inset: 0; }
+  .collection-tile__media { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
   .collection-tile__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
   .collection-tile:hover .collection-tile__media img { transform: scale(1.05); }
   .collection-tile__placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, var(--ff-charcoal), var(--ff-stone)); }
   .collection-tile__overlay {
-    position: absolute; inset: 0;
+    position: absolute; top: 0; right: 0; bottom: 0; left: 0;
     background: linear-gradient(to top, rgba(38,41,42,0.65) 0%, rgba(38,41,42,0.1) 50%, transparent 100%);
   }
   .collection-tile__content {

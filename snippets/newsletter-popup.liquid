@@ -29,13 +29,13 @@
 
 <style>
   .newsletter-popup {
-    position: fixed; inset: 0; z-index: 480;
+    position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 480;
     display: flex; align-items: center; justify-content: center;
     pointer-events: none; opacity: 0;
     transition: opacity 0.35s ease;
   }
   .newsletter-popup.is-visible { pointer-events: all; opacity: 1; }
-  .newsletter-popup__overlay { position: absolute; inset: 0; background: rgba(38,41,42,0.55); }
+  .newsletter-popup__overlay { position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(38,41,42,0.55); }
   .newsletter-popup__panel {
     position: relative; z-index: 1;
     background: var(--ff-cream); border-radius: var(--ff-radius-lg);

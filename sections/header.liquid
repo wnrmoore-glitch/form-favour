@@ -169,12 +169,12 @@
     .header__nav { display: none; }
     .header__inner { grid-template-columns: auto 1fr auto; }
     .mobile-nav {
-      display: block; position: fixed; inset: 0; z-index: 300;
+      display: block; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 300;
       pointer-events: none;
     }
     .mobile-nav[aria-hidden="false"] { pointer-events: all; }
     .mobile-nav__overlay {
-      position: absolute; inset: 0;
+      position: absolute; top: 0; right: 0; bottom: 0; left: 0;
       background: rgba(38,41,42,0.5);
       opacity: 0; transition: opacity 0.3s;
     }

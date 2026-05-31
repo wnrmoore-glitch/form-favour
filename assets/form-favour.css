@@ -834,10 +834,10 @@ footer.footer,
 /* ============================================================
    20  PREDICTIVE SEARCH OVERLAY
    ============================================================ */
-.search-overlay { position: fixed; inset: 0; z-index: 350; pointer-events: none; }
+.search-overlay { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 350; pointer-events: none; }
 .search-overlay[aria-hidden="false"] { pointer-events: all; }
 .search-overlay__backdrop {
-  position: absolute; inset: 0; background: rgba(38,41,42,0.5);
+  position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(38,41,42,0.5);
   opacity: 0; transition: opacity 0.25s ease;
 }
 .search-overlay[aria-hidden="false"] .search-overlay__backdrop { opacity: 1; }
@@ -909,7 +909,7 @@ footer.footer,
 [data-product-zoom] img { transition: transform 0.4s ease; }
 
 .media-lightbox {
-  position: fixed; inset: 0; z-index: 500; display: none;
+  position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 500; display: none;
   background: rgba(38,41,42,0.92);
   align-items: center; justify-content: center;
 }

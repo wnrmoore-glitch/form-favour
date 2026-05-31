@@ -63,26 +63,26 @@
 <style>
   .slideshow { position: relative; height: var(--slideshow-height, 650px); overflow: hidden; background: var(--ff-charcoal); }
   .slideshow__slide {
-    position: absolute; inset: 0; display: flex; align-items: center;
+    position: absolute; top: 0; right: 0; bottom: 0; left: 0; display: flex; align-items: center;
     opacity: 0; visibility: hidden; transition: opacity 0.7s ease;
   }
   .slideshow__slide.is-active { opacity: 1; visibility: visible; z-index: 1; }
-  .slideshow__media { position: absolute; inset: 0; }
+  .slideshow__media { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
   .slideshow__image {
-    position: absolute; inset: 0; width: 100%; height: 100%;
+    position: absolute; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%;
     object-fit: cover; object-position: center;
   }
-  .slideshow__placeholder { position: absolute; inset: 0; background: linear-gradient(135deg, var(--ff-charcoal), var(--ff-stone)); }
+  .slideshow__placeholder { position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: linear-gradient(135deg, var(--ff-charcoal), var(--ff-stone)); }
   /* Gradient overlay: dark on left where text sits, fades right */
   .slideshow__overlay {
-    position: absolute; inset: 0;
+    position: absolute; top: 0; right: 0; bottom: 0; left: 0;
     background: linear-gradient(to right, rgba(38,41,42,0.65) 0%, rgba(38,41,42,0.3) 50%, rgba(38,41,42,0.1) 100%);
   }
   .slideshow__content { position: relative; z-index: 2; width: 100%; padding: 0 2.5rem; display: flex; }
   .slideshow__content--left { justify-content: flex-start; }
   .slideshow__content--center { justify-content: center; text-align: center; }
   .slideshow__content--right { justify-content: flex-end; }
-  .slideshow__box { background: rgba(245,241,233,0.92); backdrop-filter: blur(4px); padding: 2.5rem 3rem; max-width: 560px; border-radius: var(--ff-radius-lg); }
+  .slideshow__box { background: rgba(245,241,233,0.92); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); padding: 2.5rem 3rem; max-width: 560px; border-radius: var(--ff-radius-lg); }
   .slideshow__content--center .slideshow__box { text-align: center; }
   .slideshow__heading { font-size: clamp(2.25rem, 5vw, 4rem) !important; margin: 0.4rem 0; line-height: 1.05; }
   .slideshow__subtext { font-size: 1rem; color: var(--ff-charcoal-80); margin: 0.5rem 0 1.5rem; }
