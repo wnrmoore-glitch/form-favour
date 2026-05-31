@@ -41,8 +41,8 @@
         <p class="card__vendor">{{ product.vendor | escape }}</p>
       {%- endif -%}
       <h3 class="card__heading" itemprop="name">{{ product.title | escape }}</h3>
-      <div class="card__stars">
-        {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', concierge_install: true, product: product %}
+      <div class="card__stars jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}">
+        {{ product.metafields.judgeme.badge }}
       </div>
       <div class="card__price">
         {%- if product.compare_at_price > product.price -%}

@@ -148,9 +148,9 @@
 
       {%- endform -%}
 
-      <!-- Judge.me star rating (above form, below price) -->
-      <div class="product__reviews-badge">
-        {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', concierge_install: true, product: product %}
+      <!-- Judge.me star rating -->
+      <div class="product__reviews-badge jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}">
+        {{ product.metafields.judgeme.badge }}
       </div>
 
       <!-- Accordion tabs -->
@@ -186,7 +186,9 @@
   <div class="section__header text-center">
     <p class="eyebrow">Customer reviews</p>
   </div>
-  {% render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: true, product: product %}
+  <div id="judgeme_product_review" class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}">
+    {{ product.metafields.judgeme.reviews }}
+  </div>
 </div>
 
 {%- comment -%} Full-size image data for the lightbox {%- endcomment -%}

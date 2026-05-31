@@ -73,10 +73,10 @@
     object-fit: cover; object-position: center;
   }
   .slideshow__placeholder { position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: linear-gradient(135deg, #3a3f40, #6B6F70); }
-  /* Subtle overlay — light enough to read text, dark enough for contrast */
+  /* Even vignette — darkens edges, leaves centre bright */
   .slideshow__overlay {
     position: absolute; top: 0; right: 0; bottom: 0; left: 0;
-    background: linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+    background: rgba(0,0,0,0.18);
   }
   .slideshow__content { position: relative; z-index: 2; width: 100%; padding: 0 2.5rem; display: flex; }
   .slideshow__content--left { justify-content: flex-start; }
