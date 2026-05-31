@@ -1,0 +1,30 @@
+{% comment %}
+  Judge.me widgets snippet.
+  This file is required to prevent Liquid errors. The actual widget content
+  is injected by the Judge.me app via JavaScript (concierge install mode).
+{% endcomment %}
+
+{% case widget_type %}
+
+  {% when 'judgeme_preview_badge' %}
+    <div class="jdgm-widget jdgm-preview-badge"
+         data-id="{{ product.id }}"
+         data-auto-install="{{ concierge_install }}">
+      {{ product.metafields.judgeme.badge }}
+    </div>
+
+  {% when 'judgeme_review_widget' %}
+    <div id="judgeme_product_review"
+         class="jdgm-widget jdgm-review-widget"
+         data-id="{{ product.id }}"
+         data-auto-install="{{ concierge_install }}">
+      {{ product.metafields.judgeme.reviews }}
+    </div>
+
+  {% when 'judgeme_all_reviews_widget' %}
+    <div id="judgeme_product_reviews"
+         class="jdgm-widget jdgm-all-reviews-widget"
+         data-auto-install="{{ concierge_install }}">
+    </div>
+
+{% endcase %}
