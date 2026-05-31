@@ -1,3 +1,4 @@
+{%- paginate collection.products by 48 -%}
 {%- render 'breadcrumbs' -%}
 <div class="collection-page section">
   <div class="page-width">
@@ -62,6 +63,7 @@
     {%- endif -%}
   </div>
 </div>
+{%- endpaginate -%}
 
 <style>
   .collection-header { text-align: center; margin-bottom: 2.5rem; }

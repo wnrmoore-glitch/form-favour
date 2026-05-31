@@ -16,7 +16,7 @@
             "heading": "Strength in Everyday.",
             "subtext": "Training gear and everyday essentials, chosen for form as much as function.",
             "button_label": "Shop all",
-            "button_link": "shopify://collections/shop-all"
+            "button_link": "/collections/all"
           }
         },
         "s2": {
@@ -66,7 +66,7 @@
         "title": "Shop by category"
       },
       "blocks": {
-        "b1": { "type": "collection", "settings": { "collection": "shop-all", "heading": "Shop All" } },
+        "b1": { "type": "collection", "settings": { "collection": "all", "heading": "Shop All" } },
         "b2": { "type": "collection", "settings": { "collection": "training-fitness", "heading": "Training & Fitness" } },
         "b3": { "type": "collection", "settings": { "collection": "bags-accessories", "heading": "Bags & Accessories" } }
       },
@@ -77,7 +77,7 @@
       "settings": {
         "eyebrow": "Bestsellers",
         "title": "Shop the edit",
-        "collection": "shop-all",
+        "collection": "all",
         "products_to_show": 8,
         "columns_desktop": "4",
         "show_view_all": true
