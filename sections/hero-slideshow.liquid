@@ -15,11 +15,11 @@
         {%- else -%}
           {%- assign slide_index = forloop.index0 -%}
           {%- if slide_index == 0 -%}
-            <img src="https://cdn.shopify.com/s/files/1/0733/9887/8359/files/premium_photo-1674440622933-fb7a33f96337.jpg?v=1780189800" alt="{{ block.settings.heading | escape }}" loading="eager" fetchpriority="high" class="slideshow__image">
+            <img src="https://cdn.shopify.com/s/files/1/0733/9887/8359/files/photo-1534438327276-14e5300c3a48.jpg?v=1780233201" alt="{{ block.settings.heading | escape }}" loading="eager" fetchpriority="high" class="slideshow__image">
           {%- elsif slide_index == 1 -%}
-            <img src="https://cdn.shopify.com/s/files/1/0733/9887/8359/files/premium_photo-1753211477791-b8d9b133d924.jpg?v=1780189800" alt="{{ block.settings.heading | escape }}" loading="lazy" class="slideshow__image">
+            <img src="https://cdn.shopify.com/s/files/1/0733/9887/8359/files/photo-1571019614242-c5c5dee9f50b.jpg?v=1780233201" alt="{{ block.settings.heading | escape }}" loading="lazy" class="slideshow__image">
           {%- elsif slide_index == 2 -%}
-            <img src="https://cdn.shopify.com/s/files/1/0733/9887/8359/files/premium_photo-1678739395192-bfdd13322d34.jpg?v=1780189590" alt="{{ block.settings.heading | escape }}" loading="lazy" class="slideshow__image">
+            <img src="https://cdn.shopify.com/s/files/1/0733/9887/8359/files/photo-1518611012118-696072aa579a.jpg?v=1780233201" alt="{{ block.settings.heading | escape }}" loading="lazy" class="slideshow__image">
           {%- else -%}
             {%- assign fb = collections[block.settings.collection] | default: collections['shop-all'] -%}
             {%- if fb.image -%}
@@ -29,7 +29,7 @@
             {%- endif -%}
           {%- endif -%}
         {%- endif -%}
-        <span class="slideshow__overlay"></span>
+        <span class="slideshow__overlay" style="opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};"></span>
       </div>
 
       <div class="slideshow__content slideshow__content--{{ block.settings.position }}">
@@ -61,7 +61,7 @@
 </section>
 
 <style>
-  .slideshow { position: relative; height: 650px; overflow: hidden; background: #3a3f40; }
+  .slideshow { position: relative; height: var(--slideshow-height, 650px); overflow: hidden; background: #3a3f40; }
   .slideshow__slide {
     position: absolute; top: 0; right: 0; bottom: 0; left: 0; display: flex; align-items: center;
     opacity: 0; visibility: hidden; transition: opacity 0.7s ease;

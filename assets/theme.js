@@ -89,6 +89,9 @@
         .then(function () {
           if (btn) { btn.innerHTML = 'Added'; setTimeout(function () { btn.disabled = false; btn.innerHTML = original; }, 1200); }
           Cart.open();
+        })
+        .catch(function () {
+          if (btn) { btn.disabled = false; btn.innerHTML = original; }
         });
     },
 

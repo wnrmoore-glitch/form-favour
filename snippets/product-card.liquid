@@ -14,7 +14,7 @@
           srcset="{{ first_image | image_url: width: 400 }} 400w,
                   {{ first_image | image_url: width: 600 }} 600w,
                   {{ first_image | image_url: width: 800 }} 800w"
-          sizes="(max-width: 749px) 50vw, 25vw"
+          sizes="(max-width: 749px) 50vw, (max-width: 1024px) 33vw, 20vw"
           alt="{{ first_image.alt | escape | default: product.title | escape }}"
           width="{{ first_image.width }}"
           height="{{ first_image.height }}"
