@@ -124,6 +124,11 @@
 
       {%- endform -%}
 
+      <!-- Judge.me star rating (below price, above form) -->
+      <div class="product__reviews-badge">
+        {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', concierge_install: true, product: product %}
+      </div>
+
       <!-- Accordion tabs -->
       <div class="product__accordions">
         {%- if product.description != blank -%}
@@ -151,6 +156,14 @@
 {%- render 'sticky-atc', product: product -%}
 {%- render 'related-products', product: product, limit: 4 -%}
 {%- render 'recently-viewed', product: product -%}
+
+<!-- Judge.me full review widget -->
+<div class="product-reviews page-width section">
+  <div class="section__header text-center">
+    <p class="eyebrow">Customer reviews</p>
+  </div>
+  {% render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: true, product: product %}
+</div>
 
 {%- comment -%} Full-size image data for the lightbox {%- endcomment -%}
 <script type="application/json" data-product-images>

@@ -933,3 +933,51 @@ footer.footer,
 }
 .media-lightbox__nav--prev { left: 1.5rem; }
 .media-lightbox__nav--next { right: 1.5rem; }
+
+
+/* ============================================================
+   23  JUDGE.ME REVIEWS
+   ============================================================ */
+
+/* Star colour override */
+.jdgm-star,
+.jdgm-prev-badge__stars,
+.jdgm-widget .jdgm-star { color: var(--ff-sage) !important; }
+
+/* Preview badge on cards */
+.card__stars { margin: 0.2rem 0 0.3rem; min-height: 18px; }
+.jdgm-prev-badge { display: flex !important; align-items: center; gap: 0.35rem; }
+.jdgm-prev-badge__rating { font-size: 0.75rem !important; color: var(--ff-charcoal) !important; font-weight: 600; }
+.jdgm-prev-badge__count { font-size: 0.72rem !important; color: var(--ff-stone) !important; }
+
+/* Star badge on product page */
+.product__reviews-badge { margin-bottom: 1rem; }
+.product__reviews-badge .jdgm-prev-badge { font-size: 0.9rem; }
+
+/* Full review widget */
+.product-reviews { border-top: var(--ff-border); }
+.jdgm-widget { font-family: var(--ff-font-body) !important; color: var(--ff-charcoal) !important; }
+.jdgm-rev__title { font-family: var(--ff-font-heading) !important; font-size: 1rem !important; }
+.jdgm-rev__body { font-size: 0.875rem !important; line-height: 1.7 !important; color: var(--ff-charcoal-80) !important; }
+.jdgm-rev__author { font-size: 0.75rem !important; color: var(--ff-stone) !important; }
+.jdgm-write-rev-link,
+.jdgm-btn {
+  background: var(--ff-charcoal) !important;
+  color: var(--ff-cream) !important;
+  border: 1px solid var(--ff-charcoal) !important;
+  border-radius: var(--ff-radius) !important;
+  font-family: var(--ff-font-body) !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  padding: 0.75rem 1.5rem !important;
+  transition: background var(--ff-transition) !important;
+}
+.jdgm-write-rev-link:hover,
+.jdgm-btn:hover {
+  background: var(--ff-sage) !important;
+  border-color: var(--ff-sage) !important;
+}
+.jdgm-rev { border-bottom: var(--ff-border) !important; padding: 1.5rem 0 !important; }
+.jdgm-histogram__bar-fill { background: var(--ff-sage) !important; }
+.jdgm-summary__rating { font-family: var(--ff-font-heading) !important; color: var(--ff-charcoal) !important; }
