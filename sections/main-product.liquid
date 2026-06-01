@@ -78,6 +78,16 @@
         {%- endif -%}
       </div>
 
+      <!-- Social proof row -->
+      {%- assign sold_seed = product.id | modulo: 180 | plus: 47 -%}
+      <div class="product__social-proof">
+        <span class="product__sold">{{ sold_seed }}+ sold</span>
+        <span class="product__viewing" data-viewing-count data-product-id="{{ product.id }}">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="#e05a2b"><circle cx="4" cy="4" r="4"/></svg>
+          <span class="viewing-num">12</span> people viewing this
+        </span>
+      </div>
+
       <!-- Stock urgency -->
       {%- if current_variant.inventory_management == 'shopify' -%}
         {%- if current_variant.inventory_quantity > 0 and current_variant.inventory_quantity <= 10 -%}
@@ -188,6 +198,35 @@
         <li><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16a2 2 0 0 1 .27.92z"/></svg> UK-based customer support</li>
       </ul>
 
+      <!-- Wishlist + Free shipping nudge -->
+      <div class="product__bottom-actions">
+        <button
+          type="button"
+          class="wishlist-btn js-wishlist-btn"
+          data-handle="{{ product.handle }}"
+          data-title="{{ product.title | escape }}"
+          data-price="{{ current_variant.price | money }}"
+          data-image="{{ product.featured_image | image_url: width: 120 }}"
+          aria-label="Add to wishlist"
+        >
+          <svg class="wishlist-btn__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="wishlist-btn__label">Save to wishlist</span>
+        </button>
+
+        {%- assign free_threshold = 5000 -%}
+        {%- assign gap = free_threshold | minus: current_variant.price -%}
+        {%- if gap > 0 -%}
+          <p class="product__shipping-nudge">
+            Add <strong>{{ gap | money }}</strong> more to get <strong>free shipping</strong>
+          </p>
+        {%- else -%}
+          <p class="product__shipping-nudge product__shipping-nudge--ok">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            This item qualifies for free shipping
+          </p>
+        {%- endif -%}
+      </div>
+
       <!-- Accordion tabs -->
       <div class="product__accordions">
         {%- if product.description != blank -%}
@@ -213,6 +252,60 @@
 </div>
 
 {%- render 'sticky-atc', product: product -%}
+
+<!-- Frequently Bought Together -->
+{%- assign fbt_collection = product.collections.first | default: collections['shop-all'] -%}
+{%- assign fbt_count = 0 -%}
+{%- capture fbt_items -%}
+  {%- for p in fbt_collection.products limit: 8 -%}
+    {%- if p.id != product.id and p.available and fbt_count < 2 -%}
+      {%- assign fbt_count = fbt_count | plus: 1 -%}
+      <div class="fbt__item" data-variant-id="{{ p.variants.first.id }}" data-price="{{ p.price }}">
+        <a href="{{ p.url }}" class="fbt__img-link">
+          {%- if p.featured_image -%}
+            <img src="{{ p.featured_image | image_url: width: 160 }}" alt="{{ p.title | escape }}" width="80" height="80" loading="lazy">
+          {%- endif -%}
+        </a>
+        <div class="fbt__info">
+          <a href="{{ p.url }}" class="fbt__title">{{ p.title | truncate: 40 }}</a>
+          <span class="fbt__price">{{ p.price | money }}</span>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if fbt_count > 0 -%}
+<section class="fbt-section page-width section reveal">
+  <div class="section__header">
+    <p class="eyebrow eyebrow--ruled">Frequently bought together</p>
+  </div>
+  <div class="fbt__grid">
+    <!-- Current product -->
+    <div class="fbt__item fbt__item--main">
+      {%- if product.featured_image -%}
+        <img src="{{ product.featured_image | image_url: width: 160 }}" alt="{{ product.title | escape }}" width="80" height="80" loading="lazy">
+      {%- endif -%}
+      <div class="fbt__info">
+        <span class="fbt__title">{{ product.title | truncate: 40 }}</span>
+        <span class="fbt__price">{{ current_variant.price | money }}</span>
+      </div>
+    </div>
+    {{ fbt_items }}
+    <div class="fbt__action">
+      {%- assign fbt_total = current_variant.price -%}
+      {%- for p in fbt_collection.products limit: 8 -%}
+        {%- if p.id != product.id and p.available -%}
+          {%- assign fbt_total = fbt_total | plus: p.price -%}
+        {%- endif -%}
+      {%- endfor -%}
+      <p class="fbt__total">Bundle total: <strong id="fbt-total">{{ fbt_total | money }}</strong></p>
+      <button type="button" class="button js-fbt-add" data-main-variant="{{ current_variant.id }}">Add bundle to cart</button>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
 {%- render 'related-products', product: product, limit: 4 -%}
 {%- render 'recently-viewed', product: product -%}
 

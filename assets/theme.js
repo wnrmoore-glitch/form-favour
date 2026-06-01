@@ -366,12 +366,113 @@
     });
   }
 
+  /* ---------------------------------------------------------
+     LIVE VIEWING COUNTER
+     --------------------------------------------------------- */
+  function initViewingCounter() {
+    var el = document.querySelector('[data-viewing-count]');
+    if (!el) return;
+    var numEl = el.querySelector('.viewing-num');
+    if (!numEl) return;
+    var seed = parseInt(el.dataset.productId || '1', 10);
+    var base = (seed % 14) + 5; // 5–18 range, consistent per product
+    function update() {
+      var n = base + Math.floor(Math.random() * 3) - 1;
+      numEl.textContent = Math.max(3, n);
+    }
+    update();
+    setInterval(update, 5000);
+  }
+
+  /* ---------------------------------------------------------
+     WISHLIST (localStorage)
+     --------------------------------------------------------- */
+  var WISHLIST_KEY = 'ff-wishlist';
+
+  function getWishlist() {
+    try { return JSON.parse(localStorage.getItem(WISHLIST_KEY) || '[]'); } catch(e) { return []; }
+  }
+  function saveWishlist(list) {
+    try { localStorage.setItem(WISHLIST_KEY, JSON.stringify(list)); } catch(e) {}
+  }
+  function syncWishlistUI() {
+    var list = getWishlist();
+    // Update count bubbles
+    document.querySelectorAll('.js-wishlist-count').forEach(function(el) {
+      el.textContent = list.length;
+      el.style.display = list.length > 0 ? 'flex' : 'none';
+    });
+    // Update heart states
+    document.querySelectorAll('.js-wishlist-btn').forEach(function(btn) {
+      var saved = list.some(function(i) { return i.handle === btn.dataset.handle; });
+      btn.classList.toggle('is-wishlisted', saved);
+      btn.setAttribute('aria-label', saved ? 'Remove from wishlist' : 'Save to wishlist');
+    });
+  }
+  function initWishlist() {
+    syncWishlistUI();
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('.js-wishlist-btn');
+      if (!btn) return;
+      e.preventDefault(); e.stopPropagation();
+      var list = getWishlist();
+      var handle = btn.dataset.handle;
+      var idx = list.findIndex(function(i) { return i.handle === handle; });
+      if (idx > -1) {
+        list.splice(idx, 1);
+      } else {
+        list.push({ handle: handle, title: btn.dataset.title, price: btn.dataset.price, image: btn.dataset.image });
+      }
+      saveWishlist(list);
+      syncWishlistUI();
+    });
+  }
+
+  /* ---------------------------------------------------------
+     FREQUENTLY BOUGHT TOGETHER — add bundle
+     --------------------------------------------------------- */
+  function initFBT() {
+    var fbtBtn = document.querySelector('.js-fbt-add');
+    if (!fbtBtn) return;
+    fbtBtn.addEventListener('click', function() {
+      var ids = [];
+      var mainId = fbtBtn.dataset.mainVariant;
+      if (mainId) ids.push(mainId);
+      document.querySelectorAll('.fbt__item[data-variant-id]').forEach(function(item) {
+        ids.push(item.dataset.variantId);
+      });
+      if (!ids.length) return;
+      fbtBtn.disabled = true; fbtBtn.textContent = 'Adding…';
+      // Add items sequentially
+      ids.reduce(function(promise, id) {
+        return promise.then(function() {
+          return fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ id: id, quantity: 1 })
+          });
+        });
+      }, Promise.resolve()).then(function() {
+        return Cart.refresh();
+      }).then(function() {
+        fbtBtn.textContent = 'Added!';
+        setTimeout(function() { fbtBtn.disabled = false; fbtBtn.textContent = 'Add bundle to cart'; }, 1500);
+        Cart.open();
+      }).catch(function() {
+        fbtBtn.disabled = false; fbtBtn.textContent = 'Add bundle to cart';
+      });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     Cart.init();
     initQuickAdd();
     initPredictiveSearch();
     initSlideshows();
     initScrollReveal();
+    initViewingCounter();
+    initWishlist();
+    initFBT();
     window.FFCart = Cart;
   });
 })();
