@@ -251,6 +251,27 @@
   </div>
 </div>
 
+<!-- Reviews section — sits directly under the product grid -->
+<div class="product-reviews page-width section" id="product-reviews">
+  <div class="section__header text-center reveal">
+    <p class="eyebrow eyebrow--ruled">Customer reviews</p>
+    <h2>What people are saying</h2>
+  </div>
+
+  {%- if product.metafields.judgeme.reviews != blank -%}
+    <div id="judgeme_product_review" class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}">
+      {{ product.metafields.judgeme.reviews }}
+    </div>
+  {%- else -%}
+    <div class="reviews-empty reveal">
+      <div class="reviews-empty__stars">★★★★★</div>
+      <p class="reviews-empty__title">Be the first to review {{ product.title | truncate: 40 }}</p>
+      <p class="reviews-empty__sub">Share your experience to help other shoppers.</p>
+      <a href="mailto:hello@formandfavour.co.uk?subject=Review: {{ product.title | url_encode }}" class="button button--secondary">Write a review</a>
+    </div>
+  {%- endif -%}
+</div>
+
 {%- render 'sticky-atc', product: product -%}
 
 <!-- Frequently Bought Together -->
@@ -308,29 +329,6 @@
 
 {%- render 'related-products', product: product, limit: 4 -%}
 {%- render 'recently-viewed', product: product -%}
-
-<!-- Reviews section -->
-<div class="product-reviews page-width section" id="product-reviews">
-  <div class="section__header text-center reveal">
-    <p class="eyebrow eyebrow--ruled">Customer reviews</p>
-    <h2>What people are saying</h2>
-  </div>
-
-  {%- if product.metafields.judgeme.reviews != blank -%}
-    <!-- Judge.me widget (when app is installed) -->
-    <div id="judgeme_product_review" class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}">
-      {{ product.metafields.judgeme.reviews }}
-    </div>
-  {%- else -%}
-    <!-- Fallback: invite first review -->
-    <div class="reviews-empty reveal">
-      <div class="reviews-empty__stars">★★★★★</div>
-      <p class="reviews-empty__title">Be the first to review {{ product.title | truncate: 40 }}</p>
-      <p class="reviews-empty__sub">Share your experience to help other shoppers.</p>
-      <a href="mailto:hello@formandfavour.co.uk?subject=Review: {{ product.title | url_encode }}" class="button button--secondary">Write a review</a>
-    </div>
-  {%- endif -%}
-</div>
 
 <!-- Schema.org product review markup (powers Google rich snippets + Merchant Centre) -->
 <script type="application/ld+json">
