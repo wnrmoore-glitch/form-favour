@@ -397,11 +397,19 @@
 <style>
   .product-page__grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 4.5rem;
     align-items: start;
   }
-  /* Gallery */
+  /* Gallery — sticks in view while the buy box scrolls */
+  .product-gallery { position: sticky; top: 96px; }
+  .product-gallery__main {
+    border-radius: var(--ff-radius-lg);
+    overflow: hidden;
+    background: var(--ff-white);
+    box-shadow: 0 10px 36px rgba(38, 48, 40, 0.08);
+    border: 1px solid rgba(38, 48, 40, 0.06);
+  }
   .product-gallery__main img {
     width: 100%; border-radius: var(--ff-radius-lg); object-fit: cover;
   }
@@ -417,9 +425,12 @@
   .product-gallery__thumb--active,
   .product-gallery__thumb:hover { border-color: var(--ff-sage); }
   /* Info */
-  .product__vendor { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ff-sage); margin: 0 0 0.5rem; }
-  .product__title { font-size: clamp(1.6rem, 3vw, 2.25rem) !important; margin: 0 0 0.75rem; }
-  .product__price { font-size: 1.3rem; font-weight: 600; margin-bottom: 1.5rem; }
+  .product__vendor { font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ff-sage); margin: 0 0 0.5rem; }
+  .product__title { font-size: clamp(1.6rem, 3vw, 2.25rem) !important; margin: 0 0 0.9rem; }
+  .product__price {
+    font-size: 1.4rem; font-weight: 600; margin: 0 0 1.4rem; padding-bottom: 1.4rem;
+    border-bottom: 1px solid rgba(38, 48, 40, 0.1);
+  }
   .price-item--sale { color: var(--ff-sage-dk); }
   .price-item--regular { text-decoration: line-through; color: var(--ff-stone-lt); font-size: 1rem; font-weight: 400; margin-left: 0.5rem; }
   /* Options */
@@ -446,7 +457,24 @@
   /* Add to cart */
   .product-form__submit { width: 100%; margin-top: 1rem; padding: 1rem 2rem !important; font-size: 0.82rem !important; }
   .product__description { border-top: var(--ff-border); padding-top: 1.5rem; margin-top: 1.75rem; line-height: 1.8; color: var(--ff-charcoal-80); }
+  /* Accordion chevron affordance */
+  .product__accordions .accordion__title {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .product__accordions .accordion__title::-webkit-details-marker { display: none; }
+  .product__accordions .accordion__title::after {
+    content: ''; flex-shrink: 0; width: 9px; height: 9px;
+    border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 0.25s ease;
+  }
+  .product__accordions details[open] > .accordion__title::after {
+    transform: translateY(1px) rotate(225deg);
+  }
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  @media (max-width: 989px) {
+    .product-gallery { position: static; top: auto; }
+  }
   @media (max-width: 749px) {
     .product-page__grid { grid-template-columns: 1fr; gap: 2rem; }
   }

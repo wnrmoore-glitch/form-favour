@@ -4,6 +4,7 @@
   <div class="page-width">
     <!-- Collection header -->
     <div class="collection-header">
+      <p class="collection-header__eyebrow eyebrow eyebrow--ruled">Collection</p>
       <h1 class="collection__title">{{ collection.title }}</h1>
       {%- if collection.description != blank -%}
         <div class="collection__description rte">{{ collection.description }}</div>
@@ -86,14 +87,19 @@
 {%- endpaginate -%}
 
 <style>
-  .collection-header { text-align: center; margin-bottom: 2rem; }
-  .collection__title { margin: 0 0 0.5rem; }
-  .collection__description { color: var(--ff-stone); max-width: 600px; margin: 0 auto; }
+  .collection-header { text-align: center; margin-bottom: 2.75rem; }
+  .collection-header__eyebrow { justify-content: center; margin-bottom: 0.85rem; }
+  .collection__title { margin: 0 0 0.65rem; position: relative; display: inline-block; padding-bottom: 0.9rem; }
+  .collection__title::after {
+    content: ''; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+    width: 48px; height: 2px; background: var(--ff-gold); opacity: 0.7;
+  }
+  .collection__description { color: var(--ff-stone); max-width: 600px; margin: 0.5rem auto 0; line-height: 1.7; }
 
   .collection-toolbar {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 0.75rem 0; border-top: var(--ff-border); border-bottom: var(--ff-border);
-    margin-bottom: 1.5rem; gap: 1rem;
+    padding: 0.85rem 0; border-top: var(--ff-border); border-bottom: var(--ff-border);
+    margin-bottom: 2rem; gap: 1rem;
   }
   .collection-toolbar__count { font-size: 0.78rem; color: var(--ff-stone); letter-spacing: 0.06em; margin: 0; }
   .collection-toolbar__right { display: flex; align-items: center; gap: 1rem; }
@@ -117,7 +123,7 @@
   .product-grid {
     display: grid;
     grid-template-columns: repeat(var(--grid-cols, 4), 1fr);
-    gap: 1.25rem;
+    gap: 1.75rem 1.5rem;
     margin: 0; padding: 0;
   }
   .product-grid__item { min-width: 0; }

@@ -49,8 +49,9 @@
   --ff-font-body:    "Jost", "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
 
   /* Sizing */
-  --ff-radius:     2px;
+  --ff-radius:     3px;
   --ff-radius-lg:  4px;
+  --ff-radius-pill: 99px;
   --ff-border:     1px solid rgba(38, 48, 40, 0.13);
   --ff-border-dk:  1px solid rgba(38, 48, 40, 0.28);
   --ff-transition: 0.22s ease;
@@ -101,13 +102,22 @@ h4, .h4 { font-size: 1.1rem; }
 
 /* Subheadings / eyebrow labels */
 .eyebrow,
-.section__title-subtext,
-.collection__description {
+.section__title-subtext {
   font-family: var(--ff-font-body) !important;
   font-size: 0.7rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ff-sage);
+}
+
+/* Collection / section description — readable sentence, not an eyebrow label */
+.collection__description {
+  font-family: var(--ff-font-body);
+  font-size: 0.95rem;
+  letter-spacing: normal;
+  text-transform: none;
+  line-height: 1.7;
+  color: var(--ff-stone);
 }
 
 p, li, td, th { line-height: 1.7; }
@@ -510,15 +520,24 @@ a:hover { color: var(--ff-sage-dk); }
 
 /* Wishlist heart on cards */
 .card__wishlist {
-  position: absolute; top: 0.5rem; left: 0.5rem; z-index: 4;
-  width: 28px; height: 28px; border-radius: 50%;
+  position: absolute; top: 0.6rem; right: 0.6rem; z-index: 4;
+  width: 32px; height: 32px; border-radius: 50%;
   background: rgba(245,240,232,0.92); border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: background var(--ff-transition), color var(--ff-transition);
+  transition: background var(--ff-transition), color var(--ff-transition),
+              opacity 0.25s ease, transform 0.25s ease;
   color: var(--ff-stone);
+  opacity: 0; transform: translateY(-4px);
+  box-shadow: 0 2px 8px rgba(38, 48, 40, 0.12);
 }
+.card:hover .card__wishlist,
+.card__wishlist:focus-visible,
+.card__wishlist.is-wishlisted { opacity: 1; transform: translateY(0); }
 .card__wishlist:hover,
 .card__wishlist.is-wishlisted { background: #fff; color: #c0392b; }
+@media (max-width: 749px) {
+  .card__wishlist { opacity: 1; transform: none; }
+}
 .card__wishlist.is-wishlisted svg { fill: #c0392b; stroke: #c0392b; }
 
 /* Wishlist count in header */
@@ -808,8 +827,8 @@ label, .field__label {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  border-radius: var(--ff-radius) !important;
-  padding: 0.3rem 0.6rem;
+  border-radius: var(--ff-radius-pill) !important;
+  padding: 0.3rem 0.7rem;
 }
 
 .badge--sale,

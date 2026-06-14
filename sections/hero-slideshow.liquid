@@ -79,6 +79,12 @@
     background: rgba(0,0,0,0.18);
   }
   .slideshow__content { position: relative; z-index: 2; width: 100%; padding: 0 2.5rem; display: flex; }
+  /* Bottom-up scrim: keeps bottom-aligned hero copy legible over any image */
+  .slideshow__content--bottom::before {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 70%;
+    background: linear-gradient(to top, rgba(38,48,40,0.55), transparent 45%);
+    pointer-events: none; z-index: -1;
+  }
   .slideshow__content--left { justify-content: flex-start; }
   .slideshow__content--center { justify-content: center; text-align: center; }
   .slideshow__content--right { justify-content: flex-end; }
