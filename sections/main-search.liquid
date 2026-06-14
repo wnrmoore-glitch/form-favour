@@ -1,7 +1,8 @@
 <div class="search-page section">
   <div class="page-width">
     <h1 class="search-page__title">Search</h1>
-    {%- form 'search', action: routes.search_url -%}
+    <form action="{{ routes.search_url }}" method="get" role="search">
+      <input type="hidden" name="type" value="product">
       <div class="search-page__form">
         <input
           type="search" name="q"
@@ -12,7 +13,7 @@
         >
         <button type="submit" class="button">Search</button>
       </div>
-    {%- endform -%}
+    </form>
     {%- if search.performed -%}
       {%- if search.results_count == 0 -%}
         <p class="search-page__empty">No results for <em>"{{ search.terms | escape }}"</em>.</p>
